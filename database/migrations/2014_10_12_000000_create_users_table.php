@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+            $table->foreignId("role_id")->constrained("user_roles")->onDelete("cascade");
         });
     }
 

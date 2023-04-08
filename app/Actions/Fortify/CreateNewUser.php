@@ -19,12 +19,18 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        // Custom messages for UTM email address validation
+        $messages = array(
+            'email' => 'The email must be a valid UTM email address.',
+        );
+         
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users','regex:/(.*)\.utm\.my$/i'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
+        ],$messages)->validate();
 
         return User::create([
             'name' => $input['name'],

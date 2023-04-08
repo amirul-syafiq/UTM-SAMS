@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -34,6 +35,9 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+
+            'role_id' => $this->faker->randomElement(UserRole::all()->pluck('id')->toArray()),
+            
         ];
     }
 
@@ -69,4 +73,6 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+  
 }
