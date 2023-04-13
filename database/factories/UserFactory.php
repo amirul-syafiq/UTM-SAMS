@@ -26,6 +26,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+
+            'id' => $this->faker->unique()->randomNumber(8),
+            'utm_id' => $this->faker->unique()->randomNumber(8),
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -35,7 +38,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
-
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
             'role_id' => $this->faker->randomElement(UserRole::all()->pluck('id')->toArray()),
             
         ];

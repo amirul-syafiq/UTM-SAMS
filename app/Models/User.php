@@ -26,10 +26,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'utm_id',  //matric id or staff id
         'name',
         'email',
         'password',
-        'role_id',
+        'address',
+        'phone',
+        
     ];
 
     /**
@@ -61,4 +64,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function userRole()
+    {
+        return $this->hasOne(UserRole::class);
+    }
 }
