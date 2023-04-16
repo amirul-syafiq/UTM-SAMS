@@ -13,4 +13,6 @@ class UserRoleController extends Controller
         $role = $user->role;
         return view('user_role.index', compact('role'));
     }
+
+    
 }
