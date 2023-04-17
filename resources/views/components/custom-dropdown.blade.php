@@ -1,13 +1,4 @@
-@php
-    $name = 'my-select';
-    $label = 'My Select';
-    $options = [
-        '1' => 'Option 1',
-        '2' => 'Option 2',
-        '3' => 'Option 3',
-    ];
-    $selected = 2;
-@endphp
+
 
 <div>
     <x-label for="{{ $name }}" :value="$label" />
