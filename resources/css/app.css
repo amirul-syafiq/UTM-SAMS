@@ -1,5 +1,5 @@
+@import url(event-card.css);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url(event-card.css);
 

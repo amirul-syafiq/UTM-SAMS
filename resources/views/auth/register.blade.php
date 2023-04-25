@@ -43,7 +43,7 @@
             $roles = App\Models\UserRole::all()->pluck('role_name', 'id');
             @endphp
             <div class="mt-4">
-                <x-custom-dropdown name="role" :options="$roles" label="User Role" />
+                <x-custom-dropdown name="role" :options="$roles" selected="old(role)" label="User Role" />
 
 
             </div>
