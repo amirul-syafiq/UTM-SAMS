@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_images', function (Blueprint $table) {
+        Schema::create('clubs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("image_name");
-            $table->string('image_description');
-            $table->foreignId('event_promotion_id')->constrained('event_promotions');
-            $table->string('image_s3_key')->nullable();
+            $table->string('club_advisor');
+            $table->string('club_description');
+            $table->string('club_type');
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamp('deleted_at')->nullable();
+
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_images');
+        Schema::dropIfExists('clubs');
     }
 };

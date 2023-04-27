@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_images', function (Blueprint $table) {
-            $table->id();
+        Schema::create('rf_application_statuses', function (Blueprint $table) {
             $table->timestamps();
-            $table->string("image_name");
-            $table->string('image_description');
-            $table->foreignId('event_promotion_id')->constrained('event_promotions');
-            $table->string('image_s3_key')->nullable();
+            $table->string('application_status');
+            $table->string('application_status_description');
+            $table->timestamp('deleted_at')->nullable();
+            $table->string('status_code');
+            $table->primary('status_code');
+
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_images');
+        Schema::dropIfExists('r_f__application__statuses');
     }
 };

@@ -15,6 +15,8 @@ class UserRole extends Model
     private $role_name;
     private $role_description;
 
+
+    // each roles has many users
     public function users():HasMany{
         return $this->hasMany(User::class);
     }

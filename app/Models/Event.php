@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -15,10 +16,23 @@ class Event extends Model
         'event_description',
         'event_start_date',
         'event_end_date',
-        'event_organizer'
+        'event_venue',
+        'event_type',
+        'event_ref_no', // reference no obtained from acad @ hep 
+        
     ];
 
-    public function EventImage():HasMany{
-        return $this->hasMany(EventImage::class);
+    protected $guarded =[
+        'event_organizer',
+        'event_status',
+    ];
+    // each event belongs to one user
+    public function organizer():BelongsTo{
+        return $this->belongsTo(User::class);
+    }
+    
+    // each event has many event promotion
+    public function eventPromotions():HasMany{
+        return $this->hasMany(EventPromotion::class);
     }
 }

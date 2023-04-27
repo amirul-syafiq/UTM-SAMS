@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class EventImage extends Model
 {
@@ -12,9 +14,18 @@ class EventImage extends Model
     protected $fillable=[
         'image_name',
         'image_description',      
-        'uploaded_by',
-        'event_id',
     ];
 
+    protected $guarded=[
+        'event_promotion_id',
+        'image_s3_key'
+    ];
+    
+
+    public function eventPromotion():BelongsTo{
+        return $this->belongsTo(EventPromotion::class);
+    }
+
+ 
     
 }

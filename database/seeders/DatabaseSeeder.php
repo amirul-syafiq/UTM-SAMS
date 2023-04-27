@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserRoleSeeder::class,
+            RF_Application_Status_seeder::class,
             
         ]);
         \App\Models\User::factory(10)->create();

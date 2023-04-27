@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -34,7 +36,7 @@ class User extends Authenticatable
         'address',
         'phone',
         'role_id'
-        
+
     ];
 
     /**
@@ -68,8 +70,24 @@ class User extends Authenticatable
     ];
 
 
-    public function events():HasMany{
+    // each user may have many event
+    public function events(): HasMany
+    {
         return $this->hasMany(Event::class);
     }
 
+    // each user have one role
+    public function userRole(): BelongsTo
+    {
+        return $this->belongsTo(UserRole::class);
+    }
+
+    public function participants():HasMany{
+        return $this->hasMany(Participant::class);
+    }
+
+    public function club():HasOne{
+        return $this->hasOne(Club::class);
+    }
+    
 }
