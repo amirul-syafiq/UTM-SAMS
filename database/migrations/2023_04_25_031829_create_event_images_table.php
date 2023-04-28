@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string("image_name");
             $table->string('image_description');
-            $table->foreignId('event_promotion_id')->constrained('event_promotions');
+            $table->foreignId('event_promotion_id')->constrained('event_promotions')->unique();
             $table->string('image_s3_key')->nullable();
         });
     }

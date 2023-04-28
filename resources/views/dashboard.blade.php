@@ -8,41 +8,20 @@
     <div class="py-12">
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg justify-content " style="display:flex ;flex-wrap:wrap">
-                @include('dashboard.event-card', [
-                'title' => 'Event Title',
-                'date' => '2023-05-01',
-                'location' => 'Online',
-                'image' => 'https://via.placeholder.com/800x400.png?text=Event+Image',
-                'class' => 'my-event-card',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem.'
-                ])
-                @include('dashboard.event-card', [
-                'title' => 'Event Title',
-                'date' => '2023-05-01',
-                'location' => 'Online',
-                'image' => 'https://via.placeholder.com/800x400.png?text=Event+Image',
-                'class' => 'my-event-card',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem.'
-                ])
-                @include('dashboard.event-card', [
-                'title' => 'Event Title',
-                'date' => '2023-05-01',
-                'location' => 'Online',
-                'image' => 'https://via.placeholder.com/800x400.png?text=Event+Image',
-                'class' => 'my-event-card',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem.'
-                ])
-                @include('dashboard.event-card', [
-                'title' => 'Event Title',
-                'date' => '2023-05-01',
-                'location' => 'Online',
-                'image' => 'https://via.placeholder.com/800x400.png?text=Event+Image',
-                'class' => 'my-event-card',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet lorem.'
-                ])
-
-            </div>
+          
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach($events as $event)
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="h-64 bg-gray-400" style="background-image: url('{{ $event->eventImage->image_s3_key }}'); background-size: cover; background-position: center;"></div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-2">{{ $event->event->event_name }}</h3>
+                        <div class="text-gray-600 text-sm mb-2">{{ $event->event->event_start_date }}</div>
+                        <div class="text-gray-600 text-sm mb-2">{{ $event->event->event_venue }}</div>
+                        <p class="text-gray-700 text-sm">{{ $event->event->event_description }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
         </div>
     </div>
 </x-app-layout>

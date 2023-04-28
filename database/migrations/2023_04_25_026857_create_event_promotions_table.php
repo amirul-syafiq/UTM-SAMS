@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('promotion_end_date');
             $table->integer('participant_limit');
             $table->string('ecertificate_s3_key')->nullable();
-            $table->foreignId('event_id')->constrained('events');
+            $table->foreignId('event_id')->constrained('events')->unique();
         });
     }
 

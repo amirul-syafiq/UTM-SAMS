@@ -3,13 +3,16 @@
 .my-event-card .event-card {
   background-color: #f8f8f8;
   border: 2px solid #e2e8f0;
-  
+ 
 }
 
 .my-event-card .event-image {
   background-image: url('https://via.placeholder.com/640x360');
   background-size: cover;
   background-position: center center;
+  height: 16rem;
+  width: 16rem;
+  
 }
 
 .my-event-card .event-details {
@@ -65,7 +68,7 @@
 
 </style>
 
-<div class="event-card {{ $class }} bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="card event-card {{ $class }} bg-white rounded-lg shadow-lg overflow-hidden">
   <div class="event-image h-64 md:h-56 lg:h-64 xl:h-80 bg-gray-400" style="background-image: url('{{ $image }}')"></div>
   <div class="event-details p-4 md:p-6 lg:p-8 xl:p-10">
     <h3 class="event-title font-semibold text-lg md:text-xl lg:text-2xl mb-2">

@@ -29,7 +29,7 @@ class EventPromotion extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function image(): HasOne
+    public function eventImage(): HasOne
     {
         return $this->hasOne(EventImage::class);
     }

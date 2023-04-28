@@ -13,11 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
+  
         $this->call([
             UserRoleSeeder::class,
             RF_Application_Status_seeder::class,
@@ -25,5 +21,8 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory(10)->create();
 
+        \App\Models\Event::factory(10)->create();
+        \App\Models\EventPromotion::factory(10)->create();
+        \App\Models\EventImage::factory(10)->create();
     }
 }
