@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp("event_start_date")->default(now());
             $table->timestamp("event_end_date")->nullable();
             $table->string("event_venue");
-            $table->string("event_type");
+            $table->foreignId("event_type")->constrained("event_types")->onDelete("cascade");
             $table->string("event_status");
             $table->string("event_ref_no"); // reference no obtained from acad @ hep
             $table->foreignId("event_organizer")->constrained("users")->onDelete("cascade");
