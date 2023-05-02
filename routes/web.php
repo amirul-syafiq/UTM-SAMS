@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
