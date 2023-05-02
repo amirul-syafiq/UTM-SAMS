@@ -13,7 +13,7 @@ class EventTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('event_types')->insert([
+        DB::table('event_types')->insert([[
             'event_type_name' => 'Sports',
             'event_type_description' => 'Sports events',
         ],
@@ -28,6 +28,6 @@ class EventTypeSeeder extends Seeder
         [
             'event_type_name' => 'Others',
             'event_type_description' => 'Other events',
-        ]);
+        ]]);
     }
 }
