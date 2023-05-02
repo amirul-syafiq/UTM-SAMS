@@ -26,5 +26,12 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    });
+});
+
+
+Route::get('createEventForm', function () {
+    return view('eventManagement.createEvent');
+})->name('createEventForm');
+
+Route::post('/events', [EventController::class, 'createEvent'])->name('event.createEvent');
 
