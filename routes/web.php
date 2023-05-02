@@ -30,9 +30,11 @@ Route::middleware([
 });
 
 
-Route::get('createEventForm', function () {
-    return view('eventManagement.createEvent');
+Route::get('event', function () {
+    return view('eventManagement.eventDetails');
 })->name('createEventForm');
 
 Route::post('/events', [EventController::class, 'createEvent'])->name('event.createEvent');
-
+Route::get('/events', [EventController::class, 'viewEvent'])->name('event.viewEvent');
+Route::get('/events/{eventId}', [EventController::class, 'editEventDetails'])->name('event.editEventDetails');
+Route::put('/events/{eventId}', [EventController::class, 'updateEvent'])->name('event.updateEvent');

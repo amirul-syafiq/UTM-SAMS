@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -89,5 +90,10 @@ class User extends Authenticatable
     public function club():HasOne{
         return $this->hasOne(Club::class);
     }
-    
+
+    public function hasRole($role): bool
+    {
+        return $this->userRole->role_name === $role;
+    }
+
 }

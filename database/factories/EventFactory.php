@@ -30,6 +30,7 @@ class EventFactory extends Factory
             'event_venue' => $this->faker->address(),
             'event_type' => $this->faker->randomElement(EventType::all()->pluck('id')->toArray()),
         //    take codes related to application
+            'event_status' => $this->faker->randomElement(RF_Status::where('status_code', 'like', '%AP%')->pluck('status_code')->toArray()),
             'event_ref_no' => $this->faker->randomNumber(5),
             'event_organizer' => $this->faker->randomElement(User::all()->pluck('id')->toArray()),
 

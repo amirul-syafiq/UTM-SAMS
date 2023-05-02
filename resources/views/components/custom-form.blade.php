@@ -3,6 +3,7 @@
     'title' => '',
     'buttonText' => '',
     'action' => '',
+    'method' => 'POST',
 ])
 
 <div {{ $attributes->merge(['class' => 'max-w-3xl mx-auto my-6 px-4 py-8 bg-white dark:bg-gray-800 shadow rounded-md']) }}>
@@ -10,7 +11,7 @@
 
     <form action="{{ $action }}" method="POST">
         @csrf
-
+        @method($method)
         {{ $slot }}
 
         <div class="mt-4">
