@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\DashboardController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventPromotionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +38,7 @@ Route::post('/events', [EventController::class, 'createEvent'])->name('event.cre
 Route::get('/events', [EventController::class, 'viewEvent'])->name('event.viewEvent');
 Route::get('/events/{eventId}', [EventController::class, 'editEventDetails'])->name('event.editEventDetails');
 Route::put('/events/{eventId}', [EventController::class, 'updateEvent'])->name('event.updateEvent');
+
+// Event Promotion
+Route::get('/event-promotion', [EventPromotionController::class, 'index'])->name('event-promotion.index');
+Route::get('/my-event-promotion/{event_id}', [EventPromotionController::class, 'viewMyEventPromotion'])->name('event-promotion.viewMyEventPromotion');

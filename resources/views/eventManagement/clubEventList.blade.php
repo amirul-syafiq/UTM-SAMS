@@ -46,6 +46,9 @@
                                 <td class="border px-4 py-2">
                                      <a href="{{ route('event.editEventDetails', $clubEvent->id) }}"
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                        <br>
+                                    <a href="{{ route('event-promotion.viewMyEventPromotion',['event_id'=>$clubEvent->id]) }}"
+                                        class= "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Promote</a>
                                     {{-- <a href="{{ route('event.deleteEvent', $clubEvent->id) }}"
                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a> --}}
                                 </td>

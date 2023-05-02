@@ -1,9 +1,18 @@
 <!-- components/table.blade.php -->
 @props(['data'])
 
-@php
+
+@if ($data->isEmpty())
+<div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+    No data found.
+</div>
+
+@else
+
+    @php
     $headers = $data->first()->getFillable();
-@endphp
+
+    @endphp
 
 <table {{ $attributes->merge(['class' => 'min-w-full divide-y divide-gray-200']) }}>
     <thead class="bg-gray-50 dark:bg-gray-800">
@@ -28,3 +37,6 @@
         @endforeach
     </tbody>
 </table>
+
+
+@endif
