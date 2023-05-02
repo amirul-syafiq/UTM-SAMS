@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -22,6 +23,7 @@ class EventPromotion extends Model
     protected $guarded = [
         'event_id',
         'ecertificate_s3_key',
+        'promotion_status',
     ];
 
     public function event(): BelongsTo
@@ -37,5 +39,10 @@ class EventPromotion extends Model
     public function participants(): HasMany
     {
         return $this->hasMany(Participant::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->BelongsToMany(Tags::class);
     }
 }

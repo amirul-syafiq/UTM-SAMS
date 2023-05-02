@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserRoleSeeder::class,
-            RF_Application_Status_seeder::class,
+            RF_Status_seeder::class,
             EventTypeSeeder::class,
 
         ]);

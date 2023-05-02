@@ -14,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('clubs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('club_advisor');
             $table->string('club_description');
             $table->string('club_type');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamp('deleted_at')->nullable();
+            $table->timestamps();
+
 
         });
     }

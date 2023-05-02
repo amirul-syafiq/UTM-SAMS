@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('event_types', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string("event_type_name");
             $table->string("event_type_description");
             $table->timestamp('deleted_at')->nullable();
+            $table->timestamps();
         });
     }
 

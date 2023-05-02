@@ -8,6 +8,6 @@ class EventController extends Controller
 {
     public function createEvent()
     {
-        
+        return view('dashboard');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 use App\Models\Event;
+use App\Models\EventType;
+use App\Models\RF_Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,11 +28,11 @@ class EventFactory extends Factory
             'event_start_date' => $this->faker->dateTimeBetween('now', '+1 years'),
             'event_end_date' => $this->faker->dateTimeBetween('now', '+1 years'),
             'event_venue' => $this->faker->address(),
-            'event_type' => $this->faker->randomElement(['conference', 'workshop', 'seminar', 'talk', 'webinar']),
-            'event_status' => $this->faker->randomElement(['Upcoming', 'Ongoing', 'Finished']),
+            'event_type' => $this->faker->randomElement(EventType::all()->pluck('id')->toArray()),
+        //    take codes related to application
             'event_ref_no' => $this->faker->randomNumber(5),
             'event_organizer' => $this->faker->randomElement(User::all()->pluck('id')->toArray()),
-            
+
         ];
 
 

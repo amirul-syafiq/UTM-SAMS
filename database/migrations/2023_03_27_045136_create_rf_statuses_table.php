@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rf_application_statuses', function (Blueprint $table) {
-            $table->timestamps();
-            $table->string('application_status');
-            $table->string('application_status_description');
-            $table->timestamp('deleted_at')->nullable();
+        Schema::create('rf_statuses', function (Blueprint $table) {
+
             $table->string('status_code');
             $table->primary('status_code');
+            $table->string('status_name');
+            $table->string('status_description');
+            $table->timestamp('deleted_at')->nullable();
+            $table->timestamps();
+
+
 
         });
     }

@@ -21,16 +21,16 @@ class ResourceApplication extends Model
 
     protected $guarded=[
         'application_status',
-        'applicant_id', //club id 
-        
+        'applicant_id', //club id
+
     ];
 
     public function applicant():BelongsTo{
         return $this->belongsTo(Club::class);
     }
-    
-    public function applicationStatus():BelongsTo{
-        return $this->belongsTo(RF_Application_Status::class);
+
+    public function statusCode():BelongsTo{
+        return $this->belongsTo(RF_Status::class);
     }
 
 }

@@ -26,7 +26,7 @@ class EventPromotionFactory extends Factory
             'promotion_end_date'=>$this->faker->dateTimeBetween('now', '+1 years'),
             'participant_limit'=>$this->faker->randomNumber(3),
             'ecertificate_s3_key'=>$this->faker->url(),
-            'event_id'=>$this->faker->unique()->randomElement(Event::all()->pluck('id')->toArray()),
+            'event_id'=>$this->faker->randomElement(Event::all()->pluck('id')->toArray()),
 
         ];
     }

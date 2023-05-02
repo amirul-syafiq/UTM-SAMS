@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Event;
 use App\Models\EventImage;
+use App\Models\EventPromotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class EventImageFactory extends Factory
     {
         return [
             'image_s3_key' => $this->faker->imageUrl(640, 480, 'poster'),
-            'event_promotion_id' => $this->faker->unique()->randomElement(Event::all()->pluck('id')->toArray()),
+            'event_promotion_id' => $this->faker->unique()->randomElement(EventPromotion::all()->pluck('id')->toArray()),
             'image_description' => $this->faker->sentence(10),
             'image_name' => $this->faker->word(2),
         ];

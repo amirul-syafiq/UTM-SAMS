@@ -28,7 +28,7 @@ class Participant extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function applicationStatus():BelongsTo{
-        return $this->belongsTo(RF_Application_Status::class);
+    public function statusCode():BelongsTo{
+        return $this->belongsTo(RF_Status::class);
     }
 }

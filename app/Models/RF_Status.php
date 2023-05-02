@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RF_Application_Status extends Model
+class RF_Status extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table='rf_application_statuses';
+    protected $table='rf_statuses';
     protected $primaryKey='status_code';
 
     protected $guarded = [
-        'application_status',
-        'application_status_description',
+        'status_name',
+        'status_description',
     ];
 
     public function resourceApplications():HasMany{
@@ -26,6 +26,10 @@ class RF_Application_Status extends Model
 
     public function participants():HasMany{
         return $this->hasMany(Participant::class);
+    }
+
+    public function events():hasMany{
+        return $this->hasMany(Event::class);
     }
 
 }

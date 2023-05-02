@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('event_promotions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string("promotion_description");
             $table->date('promotion_start_date');
             $table->date('promotion_end_date');
             $table->integer('participant_limit');
             $table->string('ecertificate_s3_key')->nullable();
-            $table->foreignId('event_id')->constrained('events')->unique();
+            $table->foreignId('event_id')->constrained('events');
+            $table->string('promotion_status')->default('EV01');
+            $table->foreign('promotion_status')->references('status_code')->on('rf_statuses');
+            $table->timestamps();
+
         });
     }
 
