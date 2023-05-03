@@ -14,7 +14,7 @@ class EventPromotionController extends Controller
 
     public function viewMyEventPromotion($event_id)
     {
-        $eventPromotion=EventPromotion::where('event_id', $event_id)->get();
-        return view('eventManagement.promotionEventList', compact('eventPromotion'));
+        $eventPromotions=EventPromotion::with('eventImage', 'event')->where('event_id',$event_id)->paginate(10);
+        return view('eventManagement.promotionEventList', compact('eventPromotions'));
     }
 }
