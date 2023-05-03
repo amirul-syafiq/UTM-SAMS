@@ -19,8 +19,12 @@ module.exports = {
 
             colors: {
                 'primary-bg': '#500000',
-                'secondary': '#332c2c',
                 'primary': '#81163f',
+                'secondary': '#332c2c',
+                'accent-1': '#ff6b6b ',
+                'accent-2': '#ffda77',
+
+
             },
         },
     },
