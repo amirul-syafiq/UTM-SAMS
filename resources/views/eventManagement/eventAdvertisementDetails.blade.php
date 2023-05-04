@@ -23,14 +23,14 @@
 
         <x-validation-errors class="mb-4" />
 
-        <div>
+        <div class="mb-2">
             <x-label for="advertisementDescription" value="{{ __('Advertisement Description') }}" />
             <x-custom-textarea name="advertisementDescription" placeholder="Enter Advertisement description">
                 {{ $eventAdvertisement->Advertisement_description ?? '' }}</x-textarea>
 
         </div>
 
-        <div>
+        <div class="mb-2">
             <x-label for="advertisementStartDateTime" value="{{ __('Advertisement Start Date and Time') }}" />
             <x-custom-input id="advertisementStartDateTime" class="block mt-1 w-full" type="datetime-local"
                 name="advertisementStartDateTime" :value="isset($eventAdvertisement)
@@ -39,13 +39,27 @@
                 autocomplete="Advertisement Start Date and Time" />
         </div>
 
-        <div>
+        <div class="mb-2">
             <x-label for="AdvertisementEndDateTime" value="{{ __('Advertisement End Date and Time') }}" />
             <x-custom-input id="AdvertisementEndDateTime" class="block mt-1 w-full" type="datetime-local"
                 name="AdvertisementEndDateTime" :value="isset($eventAdvertisement)
                     ? date('Y-m-d\TH:i', strtotime($eventAdvertisement->advertisement_end_date))
                     : ''" required autofocus
                 autocomplete="Advertisement End Date and Time" />
+        </div>
+        <div class="mb-2">
+            <x-label for="participantLimit" value="{{ __('Participant Limit') }}" />
+            <x-custom-input id="participantLimit" class="block mt-1 w-full" type="number"
+                name="participantLimit" :value="$eventAdvertisement->participant_limit ??''" required autofocus
+                autocomplete=10  />
+        </div>
+        <div class="mb-2">
+            <x-label for="tags" value="{{ __('Tags') }}" />
+            <x-custom-textarea name="test">@foreach ($eventAdvertisement->tags as $tag){{$tag->tag_name }}@if (!$loop->last),@endif @endforeach</x-custom-textarea>
+
+        </div>
+
+
 
     </x-custom-form>
 
