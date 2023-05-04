@@ -15,7 +15,7 @@ class DashboardController extends Controller
         if(Auth::check()){
 
             // get all events with their images
-            $events=EventAdvertisement::with('eventAdvertisementImage', 'event')->paginate(10);
+            $events=EventAdvertisement::with('eventAdvertisementImage', 'event','tags')->paginate(10);
 
             return view('dashboard',compact('events'));
         }

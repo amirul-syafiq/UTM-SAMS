@@ -15,7 +15,7 @@ class EventAdvertisementController extends Controller
 
     public function viewMyEventAdvertisement($event_id)
     {
-        $eventAdvertisements = EventAdvertisement::with('eventAdvertisementImage', 'event')->where('event_id', $event_id)->paginate(10);
+        $eventAdvertisements = EventAdvertisement::with('eventAdvertisementImage', 'event','tags')->where('event_id', $event_id)->paginate(10);
 
 
         return view('eventManagement.AdvertisementEventList', compact('eventAdvertisements', 'event_id'));
