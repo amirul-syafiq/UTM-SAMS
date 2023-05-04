@@ -13,15 +13,15 @@ class Participant extends Model
 
     //these atributes should not be mass assignable
     protected $guarded=[
-        'promotion_id',
+        'advertisement_id',
         'user_id',
         'register_date',
         'application_status'
 
     ];
 
-    public function eventPromotion():BelongsTo{
-        return $this->belongsTo(EventPromotion::class);
+    public function eventAdvertisement():BelongsTo{
+        return $this->belongsTo(EventAdvertisement::class);
     }
 
     public function user():BelongsTo{

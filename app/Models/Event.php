@@ -31,9 +31,9 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    // each event has many event promotion
-    public function eventPromotions():HasMany{
-        return $this->hasMany(EventPromotion::class);
+    // each event has many event Advertisement
+    public function eventAdvertisement():HasMany{
+        return $this->hasMany(EventAdvertisement::class);
     }
 
     public function eventType():BelongsTo{

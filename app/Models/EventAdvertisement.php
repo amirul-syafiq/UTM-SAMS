@@ -9,21 +9,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class EventPromotion extends Model
+class EventAdvertisement extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'promotion_description',
-        'promotion_start_date',
-        'promotion_end_date',
+        'advertisement_description',
+        'advertisement_start_date',
+        'advertisement_end_date',
         'participant_limit',
     ];
 
     protected $guarded = [
         'event_id',
         'ecertificate_s3_key',
-        'promotion_status',
+        'advertisement_status',
     ];
 
     public function event(): BelongsTo
@@ -31,9 +31,9 @@ class EventPromotion extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function eventImage(): HasOne
+    public function eventAdvertisementImage(): HasOne
     {
-        return $this->hasOne(EventImage::class);
+        return $this->hasOne(EventAdvertisementImage::class);
     }
 
     public function participants(): HasMany

@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string("tag_name");
-            $table->string("tag_description");
+            $table->string("tag_description")->nullable();
             $table->timestamps();
 
         });
 
         // pivot table
-        Schema::create('event_tags', function (Blueprint $table) {
+        Schema::create('event_advertisement_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("event_promotion_id")->constrained("event_promotions")->onDelete("cascade");
-            $table->foreignId("tag_id")->constrained("tags")->onDelete("cascade");
+            $table->foreignId("event_advertisement_id")->constrained("event_advertisements")->onDelete("cascade");
+            $table->foreignId("tags_id")->constrained("tags")->onDelete("cascade");
             $table->timestamps();
 
         });
@@ -35,6 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tags');
-        Schema::dropIfExists('event_tags');
+        Schema::dropIfExists('advertisement_tags');
     }
 };

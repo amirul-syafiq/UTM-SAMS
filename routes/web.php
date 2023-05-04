@@ -4,7 +4,7 @@ use App\Http\Controllers\DashboardController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventPromotionController;
+use App\Http\Controllers\EventAdvertisementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,8 @@ Route::get('/events', [EventController::class, 'viewEvent'])->name('event.viewEv
 Route::get('/events/{eventId}', [EventController::class, 'editEventDetails'])->name('event.editEventDetails');
 Route::put('/events/{eventId}', [EventController::class, 'updateEvent'])->name('event.updateEvent');
 
-// Event Promotion
-Route::get('/event-promotion', [EventPromotionController::class, 'index'])->name('event-promotion.index');
-Route::get('/my-event-promotion/{event_id}', [EventPromotionController::class, 'viewMyEventPromotion'])->name('event-promotion.viewMyEventPromotion');
+// Event Advertisement
+Route::get('/event-advertisement', [EventAdvertisementController::class, 'index'])->name('event-advertisement.index');
+Route::get('/my-event-advertisement/{event_id}', [EventAdvertisementController::class, 'viewMyEventAdvertisement'])->name('event-advertisement.viewMyEventAdvertisement');
+Route::get('/create-event-advertisement-form/{clubEventId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.createEventAdvertisementForm');
+Route::get('/update-event-advertisement-form/{clubEventId}/{eventAdvertisementId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.updateEventAdvertisementForm');

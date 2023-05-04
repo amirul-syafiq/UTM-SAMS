@@ -3,7 +3,7 @@
 <div>
     <x-label for="{{ $name }}" :value="$label" />
 
-    <select id="{{ $name }}" name="{{ $name }}" class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-500 transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300!important">
+    <select id="{{ $name }}" name="{{ $name }}" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
         <option value="">--Select--</option>
         @foreach ($options as $key => $value)
             <option value="{{ $key }}" {{ $selected == $key ? 'selected' : '' }}>{{ $value }}</option>

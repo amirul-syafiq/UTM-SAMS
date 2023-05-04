@@ -21,8 +21,13 @@ module.exports = {
                 'primary-bg': '#500000',
                 'primary': '#81163f',
                 'secondary': '#332c2c',
+                'tertiary': '#6ab9c9  ',
                 'accent-1': '#ff6b6b ',
                 'accent-2': '#ffda77',
+                'accent-3': '#facf5a ',
+                'accent-4': '#31a7f0 ',
+                'accent-5': '#5c6878  ',
+                'accent-6': '#f2a71b  ',
 
 
             },
@@ -32,6 +37,6 @@ module.exports = {
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'),
 
 
-             ],
+    ],
 
 };

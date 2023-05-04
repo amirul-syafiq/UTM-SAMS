@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('promotion_id')->constrained('event_promotions');
+            $table->foreignId('advertisement_id')->constrained('event_advertisements');
             $table->foreignId('user_id')->constrained('users');
             $table->date('register_date');
             $table->string('application_status')->default('AP01');

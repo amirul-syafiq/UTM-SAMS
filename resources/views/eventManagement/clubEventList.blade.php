@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2  class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Club Event List
         </h2>
     </x-slot>
@@ -16,7 +16,7 @@
             @endif
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <table class="table-fixed w-full">
+                <table class="table-auto w-full">
                     <thead>
                         <tr class="bg-gray-100">
                             <th class="px-4 py-2 w-20">No.</th>
@@ -45,10 +45,10 @@
                                 <td class="border px-4 py-2">{{ $clubEvent->status_name }}</td>
                                 <td class="border px-4 py-2">
                                      <a href="{{ route('event.editEventDetails', $clubEvent->id) }}"
-                                        class="bg-primary hover:bg-accent-1 text-white font-bold py-2 px-4  rounded">Edit</a>
-
-                                    <a href="{{ route('event-promotion.viewMyEventPromotion',['event_id'=>$clubEvent->id]) }}"
-                                        class= "bg-secondary hover:bg-accent-2 text-white font-bold py-2  px-4 rounded">Promotions</a>
+                                        class="bg-primary hover:bg-accent-2 text-white font-bold py-2 px-4  rounded">Edit</a>
+                                        <div class="mb-5"></div>
+                                    <a href="{{ route('event-advertisement.viewMyEventAdvertisement',['event_id'=>$clubEvent->id]) }}"
+                                        class= "bg-secondary hover:bg-accent-2 text-white font-bold py-2  px-4 rounded">Advertisements</a>
                                     {{-- <a href="{{ route('event.deleteEvent', $clubEvent->id) }}"
                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a> --}}
                                 </td>

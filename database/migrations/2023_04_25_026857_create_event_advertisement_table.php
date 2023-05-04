@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_promotions', function (Blueprint $table) {
+        Schema::create('event_advertisements', function (Blueprint $table) {
             $table->id();
-            $table->string("promotion_description");
-            $table->date('promotion_start_date');
-            $table->date('promotion_end_date');
+            $table->string("advertisement_description");
+            $table->date('advertisement_start_date');
+            $table->date('advertisement_end_date');
             $table->integer('participant_limit');
             $table->string('ecertificate_s3_key')->nullable();
             $table->foreignId('event_id')->constrained('events');
-            $table->string('promotion_status')->default('EV01');
-            $table->foreign('promotion_status')->references('status_code')->on('rf_statuses');
+            $table->string('advertisement_status')->default('EV01');
+            $table->foreign('advertisement_status')->references('status_code')->on('rf_statuses');
             $table->timestamps();
 
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_promotions');
+        Schema::dropIfExists('event_advertisements');
     }
 };

@@ -16,7 +16,7 @@ class Tags extends Model
         'tag_description',
     ];
 
-    public function eventPromotions():BelongsToMany{
-        return $this->belongsToMany(EventPromotion::class);
+    public function eventAdvertisements():BelongsToMany{
+        return $this->belongsToMany(EventAdvertisement::class);
     }
 }
