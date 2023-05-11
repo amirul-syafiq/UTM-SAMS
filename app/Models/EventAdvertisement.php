@@ -14,6 +14,7 @@ class EventAdvertisement extends Model
     use HasFactory;
 
     protected $fillable = [
+        'advertisement_title',
         'advertisement_description',
         'advertisement_start_date',
         'advertisement_end_date',
@@ -43,6 +44,6 @@ class EventAdvertisement extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->BelongsToMany(Tags::class);
+        return $this->BelongsToMany(Tags::class, 'event_advertisement_tags', 'event_advertisement_id', 'tag_name');
     }
 }

@@ -22,9 +22,8 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory(10)->create();
         \App\Models\Event::factory(10)->create();
-        \App\Models\EventAdvertisement::factory(10)->hasAttached(
-            \App\Models\Tags::factory()->count(4))->create();
-
+        \App\Models\EventAdvertisement::factory(10)->create();
+        \App\Models\Tags::factory(10)->create();
         \App\Models\EventAdvertisementImage::factory(10)->create();
     }
 }

@@ -7,4 +7,5 @@ use Illuminate\Http\Request;
 class EventImageController extends Controller
 {
 
+
 }

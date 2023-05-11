@@ -21,6 +21,7 @@ class EventAdvertisementFactory extends Factory
     public function definition(): array
     {
         return [
+            'advertisement_title'=>$this->faker->word(2),
             'advertisement_description'=>$this->faker->sentence(20),
             'advertisement_start_date'=>$this->faker->dateTimeBetween('now', '+1 years'),
             'advertisement_end_date'=>$this->faker->dateTimeBetween('now', '+1 years'),

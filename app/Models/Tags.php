@@ -15,8 +15,10 @@ class Tags extends Model
         'tag_name',
         'tag_description',
     ];
+    protected $primaryKey='tag_name';
+    public $incrementing=false;
 
     public function eventAdvertisements():BelongsToMany{
-        return $this->belongsToMany(EventAdvertisement::class);
+        return $this->belongsToMany(EventAdvertisement::class,'event_advertisement_tags','tag_name','event_advertisement_id');
     }
 }

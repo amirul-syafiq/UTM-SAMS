@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->id();
             $table->string("tag_name");
+            $table->primary("tag_name");
             $table->string("tag_description")->nullable();
             $table->timestamps();
 
@@ -23,7 +23,8 @@ return new class extends Migration
         Schema::create('event_advertisement_tags', function (Blueprint $table) {
             $table->id();
             $table->foreignId("event_advertisement_id")->constrained("event_advertisements")->onDelete("cascade");
-            $table->foreignId("tags_id")->constrained("tags")->onDelete("cascade");
+            $table->string("tag_name");
+            $table->foreign("tag_name")->references("tag_name")->on("tags")->onDelete("cascade");
             $table->timestamps();
 
         });
@@ -35,6 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tags');
-        Schema::dropIfExists('advertisement_tags');
+        Schema::dropIfExists('event_advertisement_tags');
     }
 };
