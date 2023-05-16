@@ -14,7 +14,7 @@
 
     @endphp
 
-<table {{ $attributes->merge(['class' => 'min-w-full divide-y divide-gray-200']) }}>
+<table {{ $attributes->merge(['class' => 'min-w-full divide-y divide-gray-200 ']) }}>
     <thead class="bg-gray-50 dark:bg-gray-800">
         <tr>
             @foreach ($headers as $header)

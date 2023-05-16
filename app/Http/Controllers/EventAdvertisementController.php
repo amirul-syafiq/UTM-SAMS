@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventAdvertisement;
+use App\Models\EventAdvertisementImage;
 use App\Models\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class EventAdvertisementController extends Controller
 {
     public function index()
     {
-        return view('event-Advertisement');
+        return view('eventManagement.eventAdvertisementList');
     }
 
     public function viewMyEventAdvertisement($event_id)
@@ -20,7 +22,7 @@ class EventAdvertisementController extends Controller
         $eventAdvertisements = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->where('event_id', $event_id)->paginate(10);
 
 
-        return view('eventManagement.AdvertisementEventList', compact('eventAdvertisements', 'event_id'));
+        return view('eventManagement.eventAdvertisementList', compact('eventAdvertisements', 'event_id'));
     }
 
     function splitTag($tags)
@@ -52,7 +54,7 @@ class EventAdvertisementController extends Controller
         $messages = array(
             'advertisementTitle.required' => 'Advertisement Title is required',
             'advertisementDescription.required' => 'Advertisement Description is required',
-            'advertisementImage.mimes' => 'Advertisement Image must be in jpeg, png, jpg, gif, svg format',
+            'advertisementImage.mimes' => 'Advertisement Image must be in jpeg, png, jpg, gif format',
             'advertisementImage.max' => 'Advertisement Image must be less than 500MB',
             'advertisementStartDate.required' => 'Advertisement Start Date  required',
             'advertisementEndDate.required' => 'Advertisement End Date required',
@@ -69,7 +71,7 @@ class EventAdvertisementController extends Controller
         Validator::make($input->all(), [
             'advertisementTitle' => ['required', 'string', 'max:255'],
             'advertisementDescription' => ['required', 'string', 'max:255'],
-            'advertisementImage' => ['mimes:jpeg,png,jpg,gif,svg', 'max:500'],
+            'advertisementImage' => ['mimes:jpeg,png,jpg,gif', 'max:512000'],
             'advertisementStartDate' => ['required', 'date'],
             'advertisementEndDate' => ['required', 'date'],
             'participantLimit' => ['required', 'integer', 'min:1'],
@@ -77,6 +79,27 @@ class EventAdvertisementController extends Controller
         ], $messages)->validate();
     }
 
+    public function uploadImage($image, $eventAdvertisementId){
+
+        $eaImage=EventAdvertisementImage::where('event_advertisement_id', $eventAdvertisementId)->get();
+
+        if($eaImage->count() > 0){
+            $imageFileName = $eaImage->first()->image_name;
+            $s3 = \Illuminate\Support\Facades\Storage::disk('s3');
+            $filePath = '/test2/' . $imageFileName;
+            $s3->delete($filePath);
+        }
+        $imageFileName = 'EAI'.$eventAdvertisementId .'.' . $image->getClientOriginalExtension();
+        $s3 = Storage::disk('s3');
+        $filePath = '/eventAdvertisement/' . $imageFileName;
+        $s3->put($filePath, file_get_contents($image));
+
+        $newEventAdvertisementImage= new EventAdvertisementImage();
+        $newEventAdvertisementImage->event_advertisement_id=$eventAdvertisementId;
+        $newEventAdvertisementImage->image_name=$imageFileName;
+        $newEventAdvertisementImage->image_s3_key=$filePath;
+        $newEventAdvertisementImage->save();
+    }
 
     public function eventAdvertisementForm($event_id, $event_advertisement_id = null)
     {
@@ -113,9 +136,12 @@ class EventAdvertisementController extends Controller
             $eventAdvertisement->advertisement_end_date= $request->advertisementEndDate;
             $eventAdvertisement->participant_limit = $request->participantLimit;
 
-
             $eventAdvertisement->save();
             $eventAdvertisement->tags()->sync($splittedTags);
+            if ($request->hasFile('advertisementImage')) {
+                $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
+            }
+
             return redirect()->route('event-advertisement.view', $event_id)->with('success', 'Event Advertisement Created Successfully');
         }
     }

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('event_advertisement_images', function (Blueprint $table) {
             $table->id();
             $table->string("image_name");
-            $table->string('image_description');
+            $table->string('image_description')->nullable();
             $table->foreignId('event_advertisement_id')->constrained('event_advertisements')->unique();
-            $table->string('image_s3_key')->nullable();
+            $table->string('image_s3_key');
             $table->timestamps();
 
         });

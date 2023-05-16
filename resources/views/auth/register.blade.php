@@ -37,7 +37,7 @@
 
             <div class="mt-4">
                 <x-label for="phone" value="{{ __('Phone') }}" />
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" required autocomplete="phone" />
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" required autocomplete="phone"  :value="old('phone')"/>
             </div>
             @php
             $roles = App\Models\UserRole::all()->pluck('role_name', 'id');

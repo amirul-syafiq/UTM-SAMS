@@ -21,7 +21,8 @@ class CreateNewUser implements CreatesNewUsers
     {
         // Custom messages for UTM email address validation
         $messages = array(
-            'email' => 'The email must be a valid UTM email address.',
+            'email.regex' => 'The email must be a valid UTM email address.',
+            'email.unique' => 'The email has already been registered.',
             'utm_id' => 'UTM ID must be unique and not empty',
         );
 
