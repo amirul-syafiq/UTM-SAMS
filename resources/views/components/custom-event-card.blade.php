@@ -6,6 +6,7 @@
     <div class="p-4">
 
         <h3 class="font-semibold text-lg mb-2">{{ $event->advertisement_title }}</h3>
+        <h4 class="font-semibold text-lg mb-2">{{ $event->event_name }}></h4>
         <div class="text-gray-600 text-sm mb-2">
             {{ \Carbon\Carbon::parse($event->event->event_start_date)->toDayDateTimeString() }}</div>
         <div class="text-gray-600 text-sm mb-2">{{ $event->event->event_venue }}</div>

@@ -30,7 +30,7 @@
                 </div>
                 <div class="mb-2">
                     @if(isset($eventAdvertisement) && isset($eventAdvertisement->eventAdvertisementImage))
-                        <img id="advertisementImagePreview" src="{{ $eventAdvertisement->eventAdvertisementImage->image_s3_key ? $eventAdvertisement->eventAdvertisementImage->image_s3_key : '#' }}" alt="Advertisement Image Preview" class="w-3/4 {{ $eventAdvertisement->eventAdvertisementImage->image_s3_key ? '' : 'hidden' }}">
+                        <img id="advertisementImagePreview" src="{{ $eventAdvertisement->eventAdvertisementImage->imageUrl ? $eventAdvertisement->eventAdvertisementImage->imageUrl : '#' }}" alt="Advertisement Image Preview" class="w-3/4 {{ $eventAdvertisement->eventAdvertisementImage->imageUrl ? '' : 'hidden' }}">
                     @else
                         <img id="advertisementImagePreview" src="#" alt="Advertisement Image Preview" class="w-3/4 hidden">
                     @endif
