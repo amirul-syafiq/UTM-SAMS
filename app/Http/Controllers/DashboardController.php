@@ -36,7 +36,7 @@ class DashboardController extends Controller
                     $query->where('event_name', 'like', '%' . $request->event_search_keyword . '%');
                 })
                 ->orWhereHas('tags', function ($query) use ($request) {
-                    $query->where('tags.tag_name', 'like', '%' . $request->event_search_keyword . '%');
+                    $query->where('tags.tag_name', '=',$request->event_search_keyword);
                 });
             })
             // ->whereHas('event', function ($query) use ($eventFilters) {
