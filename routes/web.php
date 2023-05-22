@@ -27,9 +27,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     //Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/search', [DashboardController::class, 'searchEvent'])->name('dashboard.search');
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Event
     Route::get('event', function () {
         return view('eventManagement.eventDetails');
@@ -41,8 +41,8 @@ Route::middleware([
     Route::put('/events/{eventId}', [EventController::class, 'updateEvent'])->name('event.updateEvent');
 
     // Event Advertisement
-    Route::get('/event-advertisement', [EventAdvertisementController::class, 'index'])->name('event-advertisement.index');
-    Route::get('/view-event-advertisement/{event_id}', [EventAdvertisementController::class, 'viewMyEventAdvertisement'])->name('event-advertisement.view');
+    Route::get('/view-event-advertisement-detail/{eventAdvertisement_id}', [EventAdvertisementController::class, 'viewEventAdvertisementDetail'])->name('event-advertisement.view');
+    Route::get('/view-my-event-advertisement/{event_id}', [EventAdvertisementController::class, 'viewMyEventAdvertisement'])->name('event-advertisement-my-list.view');
     Route::get('/create-event-advertisement-form/{clubEventId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.create');
     Route::get('/edit-event-advertisement-form/{clubEventId}/{eventAdvertisementId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.edit');
     Route::post('/store-event-advertisement/{clubEventId}/{eventAdvertisementId?}', [EventAdvertisementController::class, 'store'])->name('event-advertisement.store');

@@ -12,19 +12,30 @@ use Illuminate\Support\Facades\Storage;
 
 class EventAdvertisementController extends Controller
 {
-    public function index()
+    public function viewEventAdvertisementDetail($event_advertisement_id)
     {
-        return view('eventManagement.eventAdvertisementList');
+
+        $eventAdvertisement = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->find($event_advertisement_id);
+        return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement'));
     }
 
+    // To return the list of event advertisement for the club
     public function viewMyEventAdvertisement($event_id)
     {
+
+        // if(auth()->user()->role == 'club'){
+        //     $event = Event::find($event_id);
+        //     if($event->club_id != auth()->user()->club->id){
+        //         return redirect()->route('event.view')->with('error', 'You are not authorized to view this page');
+        //     }
+        // }
         $eventAdvertisements = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->where('event_id', $event_id)->paginate(10);
 
 
         return view('eventManagement.eventAdvertisementList', compact('eventAdvertisements', 'event_id'));
     }
 
+    // split the string into array of tags
     function splitTag($tags)
     {
         $tagArray = preg_split('/[\s,]+/', $tags);
@@ -37,6 +48,7 @@ class EventAdvertisementController extends Controller
         return $tagArray;
     }
 
+    // Create new tags if the tags are not existing in the database
     function createNonExistingTags($splittedTags)
     {
         $existingTags = Tags::whereIn('tag_name', $splittedTags)->pluck('tag_name')->toArray();
@@ -49,6 +61,7 @@ class EventAdvertisementController extends Controller
         }, $newTags));
     }
 
+    // Validate input from the form
     function validateInput($input)
     {
         $messages = array(
@@ -79,28 +92,33 @@ class EventAdvertisementController extends Controller
         ], $messages)->validate();
     }
 
+    // To return the list of event advertisement
     public function uploadImage($image, $eventAdvertisementId){
 
         $eaImage=EventAdvertisementImage::where('event_advertisement_id', $eventAdvertisementId)->get();
+        $newEventAdvertisementImage= new EventAdvertisementImage();
 
         if($eaImage->count() > 0){
             $imageFileName = $eaImage->first()->image_name;
             $s3 = \Illuminate\Support\Facades\Storage::disk('s3');
-            $filePath = '/test2/' . $imageFileName;
+            $filePath = '/eventAdvertisement/' . $imageFileName;
             $s3->delete($filePath);
+
+            $newEventAdvertisementImage = $eaImage->first();
         }
         $imageFileName = 'EAI'.$eventAdvertisementId .'.' . $image->getClientOriginalExtension();
         $s3 = Storage::disk('s3');
         $filePath = '/eventAdvertisement/' . $imageFileName;
         $s3->put($filePath, file_get_contents($image));
 
-        $newEventAdvertisementImage= new EventAdvertisementImage();
         $newEventAdvertisementImage->event_advertisement_id=$eventAdvertisementId;
         $newEventAdvertisementImage->image_name=$imageFileName;
         $newEventAdvertisementImage->image_s3_key=$filePath;
+
         $newEventAdvertisementImage->save();
     }
 
+    // To return the form for the club create or edit the event advertisement information
     public function eventAdvertisementForm($event_id, $event_advertisement_id = null)
     {
         $clubEvent = Event::find($event_id);
@@ -112,6 +130,7 @@ class EventAdvertisementController extends Controller
         }
     }
 
+    // To store the club event advertisement information (create or update)
     public function store(Request $request, $event_id, $event_advertisement_id = null)
     {
         $event = Event::find($event_id);
@@ -126,7 +145,10 @@ class EventAdvertisementController extends Controller
 
             $eventAdvertisement->update($request->all());
             $eventAdvertisement->tags()->sync($splittedTags);
-            return redirect()->route('event-advertisement.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
+            if ($request->hasFile('advertisementImage')) {
+                $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
+            }
+            return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
         } else {
             $eventAdvertisement = new EventAdvertisement();
             $eventAdvertisement->event_id = $event_id;
@@ -142,7 +164,9 @@ class EventAdvertisementController extends Controller
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
 
-            return redirect()->route('event-advertisement.view', $event_id)->with('success', 'Event Advertisement Created Successfully');
+            return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Created Successfully');
         }
     }
+
+
 }

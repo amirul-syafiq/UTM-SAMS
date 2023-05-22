@@ -13,13 +13,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) {
+
 
             // get all events with their images
             $events = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->paginate(9);
 
             return view('dashboard', compact('events'));
-        }
+
     }
 
     public function searchEvent(Request $request)
