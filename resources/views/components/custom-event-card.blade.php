@@ -2,10 +2,12 @@
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="h-64 relative">
             <div class="absolute inset-0">
-                <img src="{{ $event->eventAdvertisementImage->imageUrl }}" alt="Image" class="h-full w-full object-cover bg-white blur-sm	">
+                <img src="{{ $event->eventAdvertisementImage->imageUrl }}" alt="Image"
+                    class="h-full w-full object-cover bg-white blur-sm	">
             </div>
             <div class="absolute inset-0 flex items-center justify-center">
-                <img src="{{ $event->eventAdvertisementImage->imageUrl }}" alt="Image" class="max-h-full max-w-full object-contain">
+                <img src="{{ $event->eventAdvertisementImage->imageUrl }}" alt="Image"
+                    class="max-h-full max-w-full object-contain">
             </div>
         </div>
     </div>
