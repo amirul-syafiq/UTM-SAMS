@@ -45,10 +45,10 @@
                                 <td class="border px-4 py-2">{{ $clubEvent->status_name }}</td>
                                 <td class="border px-4 py-2">
                                      <a href="{{ route('event.editEventDetails', $clubEvent->id) }}"
-                                        class="bg-primary hover:bg-accent-2 text-white font-bold py-2 px-4  rounded">Edit</a>
+                                        class="bg-primary hover:bg-accent-2 hover:text-black text-white font-bold py-2 px-4  rounded">Edit</a>
                                         <div class="mb-5"></div>
                                     <a href="{{ route('event-advertisement-my-list.view',['event_id'=>$clubEvent->id]) }}"
-                                        class= "bg-secondary hover:bg-accent-2 text-white font-bold py-2  px-4 rounded">Advertisements</a>
+                                        class= "bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Advertisements</a>
                                     {{-- <a href="{{ route('event.deleteEvent', $clubEvent->id) }}"
                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a> --}}
                                 </td>
