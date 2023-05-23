@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('advertisement_id')->constrained('event_advertisements');
             $table->foreignId('user_id')->constrained('users');
             $table->date('register_date');
+            $table->json('additional_information_json')->nullable();
             $table->string('application_status')->default('AP01');
             $table->foreign('application_status')->references('status_code')->on('rf_statuses');
             $table->timestamps();

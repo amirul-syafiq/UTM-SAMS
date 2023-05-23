@@ -16,8 +16,8 @@ class Participant extends Model
         'advertisement_id',
         'user_id',
         'register_date',
-        'application_status'
-
+        'application_status',
+        'additional_information_json'
     ];
 
     public function eventAdvertisement():BelongsTo{

@@ -19,6 +19,7 @@ class EventAdvertisement extends Model
         'advertisement_start_date',
         'advertisement_end_date',
         'participant_limit',
+        'additional_information_key',
     ];
 
     protected $guarded = [

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('advertisement_end_date');
             $table->integer('participant_limit');
             $table->string('ecertificate_s3_key')->nullable();
+            $table->string('additional_information_key')->nullable();
             $table->foreignId('event_id')->constrained('events');
             $table->string('advertisement_status')->default('EV01');
             $table->foreign('advertisement_status')->references('status_code')->on('rf_statuses');
