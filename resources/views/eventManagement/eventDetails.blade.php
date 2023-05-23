@@ -85,6 +85,7 @@
 
             <x-custom-dropdown name="eventStatus" :options="$eventStatusList" :selected="$clubEvent->event_status ?? 'old(eventStatusList)'" label="Event Status" />
         </div>
+      
     </x-custom-form>
 
 </x-app-layout>

@@ -130,6 +130,17 @@ class EventAdvertisementController extends Controller
         }
     }
 
+    // To append list of additional information as a single string separated by commas
+    public function appendAdditionalInformation($eventAdvertisement)
+    {
+        $additionalInformation = "";
+        foreach ($eventAdvertisement->additionalInformation as $additionalInfo) {
+            $additionalInformation .= $additionalInfo->additional_information . ", ";
+        }
+        return  $additionalInformation;
+        
+    }
+
     // To store the club event advertisement information (create or update)
     public function store(Request $request, $event_id, $event_advertisement_id = null)
     {

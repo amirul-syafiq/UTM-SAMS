@@ -22,12 +22,14 @@
 
         <x-validation-errors class="mb-4" />
         <div class="flex flex-col md:flex-row ">
+            <!-- First Column -->
             <div class="w-full md:w-2/5 md:pr-4">
                 <div class="mb-2">
                     <x-label for="advertisementImage" value="{{ __('Upload Image') }}" />
                     <input type="file" name="advertisementImage" id="advertisementImage" onchange="previewImage(event)" accept="image/png, image/gif, image/jpeg">
                 </div>
                 <div class="mb-2">
+                    <!-- Check for existing image if available in database -->
                     @if(isset($eventAdvertisement) && isset($eventAdvertisement->eventAdvertisementImage))
                         <img id="advertisementImagePreview" src="{{ $eventAdvertisement->eventAdvertisementImage->imageUrl ? $eventAdvertisement->eventAdvertisementImage->imageUrl : '#' }}" alt="Advertisement Image Preview" class="w-3/4 {{ $eventAdvertisement->eventAdvertisementImage->imageUrl ? '' : 'hidden' }}">
                     @else
@@ -36,6 +38,7 @@
                 </div>
 
             </div>
+            <!-- Second column -->
             <div class="w-full md:w-3/5">
                 <div class="mb-2">
                     <x-label for="advertisementTitle" value="{{ __('Advertisement Title') }}" />
@@ -82,6 +85,23 @@
 
                 </div>
 
+                <!-- Participant form section -->
+                <div id="participantSection" class="dark:text-white">
+                    <p> The following data will be collected from the user upon their registration</p>
+                    <ul class="list-disc">
+                        <li>Full Name</li>
+                        <li>NRIC/ Passport Number</li>
+                        <li>Matric Id</li>
+                        <li>Phone Number</li>
+                        <li>Address</li>
+                        <li>Email</li>
+                    </ul>
+                    <br>
+                    <p> To request additional information please specify below:</p>
+                    <input type="number" hidden name="inputCounter" value=0>
+                    <button type="button" class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add Field</button>
+                </div>
+
             </div>
         </div>
 
@@ -116,5 +136,16 @@
             // Read the file data as a data URL
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function addParticipantField() {
+        // Get the participant section element
+        const participantSection = document.getElementById('participantSection');
+
+        // Create a new div element
+        const newDiv = document.createElement('input');
+
+        // Add the new div element to the participant section element
+        participantSection.appendChild(newDiv);
     }
     </script>
