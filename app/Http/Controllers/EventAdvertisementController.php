@@ -188,7 +188,4 @@ class EventAdvertisementController extends Controller
         }
     }
 
-
-
-
 }
