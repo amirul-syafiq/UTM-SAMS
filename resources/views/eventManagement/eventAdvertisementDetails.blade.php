@@ -79,7 +79,7 @@
                 </div>
                 <div class="mb-2">
                     <x-label for="advertisementTags" value="{{ __('Tags') }}" />
-                                {{-- Space cannot be added for text area to avoid any extra space in the field later --}}
+                    {{-- Space cannot be added for text area to avoid any extra space in the field later --}}
 
                     <x-custom-textarea name="advertisementTags" placeholder="Add your tags here">@if (!empty($eventAdvertisement))@foreach ($eventAdvertisement->tags as $tag){{ $tag->tag_name }}@if (!$loop->last),@endif @endforeach @endif </x-custom-textarea>
 
@@ -95,11 +95,21 @@
                         <li>Phone Number</li>
                         <li>Address</li>
                         <li>Email</li>
+                       {{-- Display additional information that has been inserted --}}
+                        @if (isset($eventAdvertisement) && !empty($eventAdvertisement->additional_informations))
+
+                            @foreach ($eventAdvertisement->additional_informations as $additional_information)
+                            <li>{{ $additional_information }}</li>
+                            @endforeach
+                        @endif
                     </ul>
                     <br>
+                    {{-- Not allow additional information to be updated when the event advertisement is created --}}
+                    @if (!(isset($eventAdvertisement)))
                     <p> To request additional information please specify below:</p>
-                    <input type="number" hidden name="inputCounter" value=0>
-                    <button type="button" class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add Field</button>
+                    <input type="number" hidden id="inputCounter" name="inputCounter" value=0>
+                    <button type="button" onclick="addParticipantField()" class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add Field</button>
+                    @endif
                 </div>
 
             </div>
@@ -137,15 +147,31 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    let inputCounter = 0;
 
     function addParticipantField() {
-        // Get the participant section element
-        const participantSection = document.getElementById('participantSection');
+    // Get the participant section element
+    const participantSection = document.getElementById('participantSection');
 
-        // Create a new div element
-        const newDiv = document.createElement('input');
+    // Create a new input element
+    const newInput = document.createElement('input');
 
-        // Add the new div element to the participant section element
-        participantSection.appendChild(newDiv);
-    }
-    </script>
+    // Set the type, name, and ID attributes for the new input element
+    newInput.type = 'text';
+    newInput.id = `additionalInformation${inputCounter}`; // Unique ID with counter value
+    newInput.name = `additionalInformation${inputCounter}`; // Unique ID with counter value
+    newInput.classList.add('border-gray-300', 'dark:border-gray-700', 'dark:bg-gray-900', 'dark:text-gray-300', 'focus:border-indigo-500', 'dark:focus:border-indigo-600', 'focus:ring-indigo-500', 'dark:focus:ring-indigo-600', 'rounded-md', 'shadow-sm', 'block', 'mt-1', 'w-full');
+    newInput.placeholder = 'Enter additional information to be collected from the user';
+    // Increment the counter for the next iteration
+    inputCounter++;
+
+    // Add the new input element to the participant section element
+    participantSection.insertBefore(newInput, participantSection.lastElementChild);
+    participantSection.insertBefore(document.createElement('br'), participantSection.lastElementChild);
+
+    document.getElementById('inputCounter').value = inputCounter;
+
+
+}
+
+</script>

@@ -19,13 +19,13 @@ class EventAdvertisement extends Model
         'advertisement_start_date',
         'advertisement_end_date',
         'participant_limit',
-        'additional_information_key',
     ];
 
     protected $guarded = [
         'event_id',
         'ecertificate_s3_key',
         'advertisement_status',
+        'additional_information_key',
     ];
 
     public function event(): BelongsTo
@@ -46,5 +46,16 @@ class EventAdvertisement extends Model
     public function tags(): BelongsToMany
     {
         return $this->BelongsToMany(Tags::class, 'event_advertisement_tags', 'event_advertisement_id', 'tag_name');
+    }
+
+    // To get array of additional information data
+    public function getAdditionalInformationsAttribute()
+    {
+        // Split the string into array of additional information by removing the comma and space
+        $additionalInformationArray = explode(", ",  $this->additional_information_key);
+        $additionalInformationArray = array_filter($additionalInformationArray);
+        $additionalInformationArray = array_values($additionalInformationArray);
+
+        return $additionalInformationArray;
     }
 }

@@ -131,15 +131,22 @@ class EventAdvertisementController extends Controller
     }
 
     // To append list of additional information as a single string separated by commas
-    public function appendAdditionalInformation($eventAdvertisement)
+    public function appendAdditionalInformation($request)
     {
         $additionalInformation = "";
-        foreach ($eventAdvertisement->additionalInformation as $additionalInfo) {
-            $additionalInformation .= $additionalInfo->additional_information . ", ";
+        for($i=0; $i<=$request->inputCounter; $i++){
+            // Check if the additional information is not empty (If user input additional information)
+
+            if($request->has('additionalInformation'.$i)){
+                $additionalInformation .= $request['additionalInformation'.$i] . ", ";
+            }
         }
+
         return  $additionalInformation;
-        
+
     }
+
+
 
     // To store the club event advertisement information (create or update)
     public function store(Request $request, $event_id, $event_advertisement_id = null)
@@ -154,11 +161,13 @@ class EventAdvertisementController extends Controller
         if ($event_advertisement_id) {
             $eventAdvertisement = EventAdvertisement::find($event_advertisement_id);
 
-            $eventAdvertisement->update($request->all());
+            $eventAdvertisement->fill($request->all());
             $eventAdvertisement->tags()->sync($splittedTags);
+            $eventAdvertisement->save();
             if ($request->hasFile('advertisementImage')) {
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
+
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
         } else {
             $eventAdvertisement = new EventAdvertisement();
@@ -168,7 +177,7 @@ class EventAdvertisementController extends Controller
             $eventAdvertisement->advertisement_start_date = $request->advertisementStartDate;
             $eventAdvertisement->advertisement_end_date= $request->advertisementEndDate;
             $eventAdvertisement->participant_limit = $request->participantLimit;
-
+            $eventAdvertisement->additional_information_key = $this->appendAdditionalInformation($request);
             $eventAdvertisement->save();
             $eventAdvertisement->tags()->sync($splittedTags);
             if ($request->hasFile('advertisementImage')) {
