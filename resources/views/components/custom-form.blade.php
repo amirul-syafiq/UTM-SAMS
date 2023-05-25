@@ -1,6 +1,6 @@
 @props([
     'title' => '',
-    'buttonText' => '',
+    'buttonText' => 'Submit',
     'action' => '',
     'method' => 'POST',
 ])

@@ -27,7 +27,7 @@ class EventController extends Controller
 
         Validator::make($input->all(), [
             'eventName' => ['required', 'string', 'max:255'],
-            'eventDescription' => ['required', 'string', 'max:255'],
+            'eventDescription' => ['required', 'string', 'max:5000'],
             'eventRefNo' => ['required', 'string', 'max:255'],
             'eventType' => ['required', 'string', 'max:255'],
             'eventVenue' => ['required', 'string', 'max:255'],

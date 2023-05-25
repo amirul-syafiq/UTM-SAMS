@@ -97,7 +97,7 @@
         </div>
         <!-- Participant form section -->
         <div id="participantSection" class="dark:text-white px-5" hidden>
-            <p> The following data will be collected from the user upon their registration</p>
+            <p> The following data will be collected from the user upon their registration. The data cannot be changed.</p>
             <ul class="list-disc">
                 <li>Full Name</li>
                 <li>NRIC/ Passport Number</li>
@@ -117,6 +117,7 @@
             {{-- Not allow additional information to be updated when the event advertisement is created --}}
             @if (!(isset($eventAdvertisement)))
             <p> To request additional information please specify below:</p>
+            <p><i>Note: You cannot modify this section after submit</i></p>
             <input type="number" hidden id="inputCounter" name="inputCounter" value=0>
             <button type="button" onclick="addParticipantField()" class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add Field</button>
             @endif

@@ -5,6 +5,8 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAdvertisementController;
+use App\Http\Controllers\ParticipantController;
+use App\Models\Participant;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,10 @@ Route::middleware([
     Route::get('/create-event-advertisement-form/{clubEventId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.create');
     Route::get('/edit-event-advertisement-form/{clubEventId}/{eventAdvertisementId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.edit');
     Route::post('/store-event-advertisement/{clubEventId}/{eventAdvertisementId?}', [EventAdvertisementController::class, 'store'])->name('event-advertisement.store');
+
+    // Participants
+    Route::get('/register-event/{event_id}', [ParticipantController::class, 'create'])->name('participant.create');
+    Route::post('/register-event/{event_id}', [ParticipantController::class, 'store'])->name('participant.store');
 
 });
 

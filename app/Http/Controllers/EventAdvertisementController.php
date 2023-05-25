@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventAdvertisement;
 use App\Models\EventAdvertisementImage;
+use App\Models\Participant;
 use App\Models\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,20 @@ class EventAdvertisementController extends Controller
     {
 
         $eventAdvertisement = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->find($event_advertisement_id);
-        return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement'));
+        $isRegistered = false;
+        $isFull = false;
+        $isClose = false;
+        if($eventAdvertisement->participants->where('user_id', auth()->user()->id)->count() > 0){
+            $isRegistered = true;
+        }
+        elseif($eventAdvertisement->participants->count() >= $eventAdvertisement->participant_limit){
+            $isFull = true;
+        }
+        elseif($eventAdvertisement->advertisement_start_date< now() || $eventAdvertisement->advertisement_end_date > now()){
+            $isClose = true;
+        }
+
+        return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement', 'isRegistered', 'isFull', 'isClose'));
     }
 
     // To return the list of event advertisement for the club
@@ -83,7 +97,7 @@ class EventAdvertisementController extends Controller
 
         Validator::make($input->all(), [
             'advertisementTitle' => ['required', 'string', 'max:255'],
-            'advertisementDescription' => ['required', 'string', 'max:255'],
+            'advertisementDescription' => ['required', 'string', 'max:5000'],
             'advertisementImage' => ['mimes:jpeg,png,jpg,gif', 'max:512000'],
             'advertisementStartDate' => ['required', 'date'],
             'advertisementEndDate' => ['required', 'date'],
@@ -161,12 +175,16 @@ class EventAdvertisementController extends Controller
         if ($event_advertisement_id) {
             $eventAdvertisement = EventAdvertisement::find($event_advertisement_id);
 
-            $eventAdvertisement->fill($request->all());
+            $eventAdvertisement->advertisement_title = $request->advertisementTitle;
+            $eventAdvertisement->advertisement_description = $request->advertisementDescription;
+            $eventAdvertisement->advertisement_start_date = $request->advertisementStartDate;
+            $eventAdvertisement->advertisement_end_date= $request->advertisementEndDate;
+            $eventAdvertisement->participant_limit = $request->participantLimit;
             $eventAdvertisement->tags()->sync($splittedTags);
-            $eventAdvertisement->save();
             if ($request->hasFile('advertisementImage')) {
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
+            $eventAdvertisement->save();
 
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
         } else {

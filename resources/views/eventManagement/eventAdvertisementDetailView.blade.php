@@ -4,16 +4,19 @@
             {{ $eventAdvertisement->advertisement_title }}
         </h2>
     </x-slot>
-    <div class="flex flex-wrap mx-20">
-        <div class="w-full sm:w-1/2 p-3 ">
+    <div class="flex flex-wrap md:mx-20">
+        <div class="w-full md:w-1/2 p-3 ">
             <!-- Left row for displaying the image -->
             <img src="{{ $eventAdvertisement->eventAdvertisementImage->imageUrl }}" alt="Image"
                 class="aspect-w-4 aspect-h-3">
         </div>
-        <div class="w-full sm:w-1/2 overflow-auto">
+        <div class="w-full md:w-1/2 overflow-auto">
             <x-custom-container>
                 <x-label>{{ __('Description') }}</x-label>
-                <p class=" text-lg mx-2 p-2">{{ $eventAdvertisement->advertisement_description }}</p>
+                <br>
+
+                <span
+                    class="whitespace-pre-line text-md mx-2 p-2">{{ $eventAdvertisement->advertisement_description }}</span>
 
                 <br><br>
                 <h4>{{ __('About Event') }}</h4>
@@ -29,7 +32,14 @@
                         <x-label>{{ __('Event Description') }}</x-label>
                     </div>
                     <div>
-                        <p>{{ $eventAdvertisement->Event->event_description }}</p>
+                        <span class="whitespace-pre-line">{{ $eventAdvertisement->Event->event_description }}</span>
+                    </div>
+
+                    <div>
+                        <x-label>{{ __('Event Venue') }}</x-label>
+                    </div>
+                    <div>
+                        <p>{{ $eventAdvertisement->Event->event_venue }}</p>
                     </div>
 
                     <div>
@@ -47,8 +57,17 @@
                     </div>
                 </div>
                 <div class="mt-8 text-center">
-                    <a href=""
-                        class= "bg-primary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Register Now</a>
+                    @if (!$isRegistered && !$isFull)
+                        <a href="{{ route('participant.create', ['event_id' => $eventAdvertisement->id]) }}"
+                            class="bg-primary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Register
+                            Now</a>
+                    @elseif($isRegistered)
+                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Already Register</button>
+                    @elseif($isFull)
+                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration Full</button>
+                    @elseif($isClose)
+                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration is closed</button>
+                    @endif
                 </div>
 
 
