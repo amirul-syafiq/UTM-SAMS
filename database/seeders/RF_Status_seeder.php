@@ -14,6 +14,7 @@ class RF_Status_seeder extends Seeder
     public function run(): void
     {
         $data = [
+            // Application Status for Appliances
             [
                 'status_code' => 'AP01',
                 'status_name' => 'New Application',
@@ -29,6 +30,8 @@ class RF_Status_seeder extends Seeder
                 'status_name' => 'Rejected',
                 'status_description' => 'Application has been rejected',
             ],
+
+            // Event and advertisement Status
             [
                 'status_code' => 'EV01',
                 'status_name' => 'Upcoming',
@@ -43,7 +46,24 @@ class RF_Status_seeder extends Seeder
                 'status_code' => 'EV03',
                 'status_name' => 'Ended',
                 'status_description' => 'Event has ended. End date is in the past',
-            ]
+            ],
+
+            // Participant Registration Status
+            [
+                'status_code' => 'PR01',
+                'status_name' => 'Registered',
+                'status_description' => 'Participant has registered for the event. Pending approval',
+            ],
+            [
+                'status_code' => 'PR02',
+                'status_name' => 'Approved',
+                'status_description' => 'Participant registration has been approved',
+            ],
+            [
+                'status_code' => 'PR03',
+                'status_name' => 'Rejected',
+                'status_description' => 'Participant registration has been rejected',
+            ],
         ];
 
         DB::table('rf_statuses')->insert($data);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rf_statuses', function (Blueprint $table) {
 
-            $table->string('status_code');
+            $table->string('status_code',5);
             $table->primary('status_code');
             $table->string('status_name');
             $table->string('status_description');

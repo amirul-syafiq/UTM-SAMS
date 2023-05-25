@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('ecertificate_s3_key')->nullable();
             $table->string('additional_information_key')->nullable();
             $table->foreignId('event_id')->constrained('events');
-            $table->string('advertisement_status')->default('EV01');
+            $table->string('advertisement_status',5)->default('EV01');
             $table->foreign('advertisement_status')->references('status_code')->on('rf_statuses');
             $table->timestamps();
 
