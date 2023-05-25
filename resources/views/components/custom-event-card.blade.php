@@ -1,6 +1,6 @@
-<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="bg-white rounded-lg shadow-lg overflow-hidden h-164">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="h-64 relative">
+        <div class="h-64 relative" name="imageDiv">
             <div class="absolute inset-0">
                 <img src="{{ $event->eventAdvertisementImage->imageUrl }}" alt="Image"
                     class="h-full w-full object-cover bg-white blur-sm	">
@@ -14,7 +14,7 @@
 
 
 
-    <div class="p-4">
+    <div class="p-4 h-100" name="detailDiv" >
         <h3 class="font-semibold text-lg mb-2">{{ $event->advertisement_title }}</h3>
         <h4 class="font-semibold text-lg mb-2">{{ $event->event->event_name }}</h4>
         <div class="text-gray-600 text-sm mb-2">
@@ -32,7 +32,7 @@
             @endforeach
         </p>
     </div>
-    <div class="align-text-bottom p-3">
+    <div class="align-text-bottom ">
         {{ $slot }}
     </div>
 </div>
