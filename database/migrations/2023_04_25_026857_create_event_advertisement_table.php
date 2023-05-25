@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('event_advertisements', function (Blueprint $table) {
             $table->id();
             $table->string("advertisement_title");
-            $table->string("advertisement_description");
+            $table->text("advertisement_description");
             $table->date('advertisement_start_date');
             $table->date('advertisement_end_date');
             $table->integer('participant_limit');

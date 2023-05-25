@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('rent_start_date');
             $table->date('rent_end_date');
             $table->foreignId('applicant_id')->constrained('clubs');
-            $table->string ('application_status')->default('AP01');
+            $table->string ('application_status',5)->default('AP01');
             $table->foreign('application_status')->references('status_code')->on('rf_statuses') ;
             $table->timestamps();
 
