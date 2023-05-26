@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div class="flex flex-wrap md:mx-20">
-        <div class="w-full md:w-1/2 p-3 ">
+        <div class="w-full md:w-1/2 p-10 ">
             <!-- Left row for displaying the image -->
             <img src="{{ $eventAdvertisement->eventAdvertisementImage->imageUrl }}" alt="Image"
                 class="aspect-w-4 aspect-h-3">
@@ -62,7 +62,7 @@
                             class="bg-primary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Register
                             Now</a>
                     @elseif($isRegistered)
-                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Already Register</button>
+                        <button disabled class="opacity-75 bg-secondary  text-white font-bold py-2  px-4 rounded">Already Register</button>
                     @elseif($isFull)
                         <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration Full</button>
                     @elseif($isClose)

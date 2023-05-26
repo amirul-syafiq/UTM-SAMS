@@ -26,6 +26,8 @@
                     @foreach ($eventAdvertisements as $eventAdvertisement)
                         <x-custom-event-card :event="$eventAdvertisement">
                             <div class=" text-right p-3">
+                                <a href="{{ route('participant.viewParticipantList', ['eventAdvertisementId'=>$eventAdvertisement->id]) }}"
+                                    class="bg-secondary hover:bg-accent-3 hover:text-secondary text-white font-bold py-2 px-4 rounded">Participant List</a>
                                 <a href="{{ route('event-advertisement.edit', ['clubEventId' => $event_id,'eventAdvertisementId'=>$eventAdvertisement->id]) }}"
                                     class="bg-accent-1 hover:bg-accent-3 hover:text-secondary text-white font-bold py-2 px-4 rounded">Edit</a>
 

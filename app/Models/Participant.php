@@ -31,4 +31,8 @@ class Participant extends Model
     public function statusCode():BelongsTo{
         return $this->belongsTo(RF_Status::class);
     }
+
+    public function getAdditionalInformationAttribute(){
+        return json_decode($this->additional_information_json);
+    }
 }
