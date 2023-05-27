@@ -24,8 +24,9 @@ class RF_Status extends Model
         return $this->hasMany(ResourceApplication::class);
     }
 
-    public function participants():HasMany{
-        return $this->hasMany(Participant::class);
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Participant::class, 'registration_status', 'status_code');
     }
 
     public function events():hasMany{

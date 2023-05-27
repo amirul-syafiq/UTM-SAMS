@@ -54,6 +54,7 @@ Route::middleware([
     Route::post('/register-event/{event_id}', [ParticipantController::class, 'store'])->name('participant.store');
     Route::get('/view-participant-list/{eventAdvertisementId}', [ParticipantController::class, 'viewParticipantList'])->name('participant.viewParticipantList');
     Route::put('/update-participant-status/{eventAdvertisementId}/{participantId}', [ParticipantController::class, 'updateParticipantStatus'])->name('participant.updateParticipantStatus');
+    Route::get('/event-registration-history', [ParticipantController::class, 'viewEventRegistrationHistory'])->name('participant.viewEventRegistrationHistory');
 
 });
 

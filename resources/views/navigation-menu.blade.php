@@ -22,6 +22,10 @@
                     <x-nav-link href="{{ route('event.viewEvent') }}" :active="request()->routeIs('event.viewEvent')">
                         {{ _('Club Event List') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('participant.viewEventRegistrationHistory') }}"
+                        :active="request()->routeIs('participant.viewEventRegistrationHistory')">
+                        {{ _('Registered Event') }}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -70,8 +70,8 @@ class ParticipantController extends Controller
 
     public function viewParticipantList($eventAdvertisement_id)
     {
-        $participants = Participant::with('user')->where('event_advertisement_id', $eventAdvertisement_id)->paginate(1);
-        $eventAdvertisement = EventAdvertisement::select('additional_information_key','id')->where('id', $eventAdvertisement_id)->first();
+        $participants = Participant::with('user')->where('event_advertisement_id', $eventAdvertisement_id)->paginate(9);
+        $eventAdvertisement = EventAdvertisement::select('additional_information_key', 'id')->where('id', $eventAdvertisement_id)->first();
         $registrationStatuses = RF_Status::where('status_code', 'like', 'PR%')->pluck('status_name', 'status_code');
         return view('eventManagement.eventAdvertisementRegisteredParticipantList', compact('participants', 'eventAdvertisement', 'registrationStatuses'));
     }
@@ -85,6 +85,20 @@ class ParticipantController extends Controller
         $participant->registration_status = $request->input('participant_registration_status' . $request->iteration);
         $participant->save();
         return redirect()->route('participant.viewParticipantList', $eventAdvertisement_id)->with('success', 'Participant status updated');
+    }
 
+    public function viewEventRegistrationHistory()
+    {
+        $registeredEvents = Participant::join('event_advertisements', 'participants.event_advertisement_id', '=', 'event_advertisements.id')
+            ->leftJoin('rf_statuses', 'participants.registration_status', '=', 'rf_statuses.status_code')
+            ->where('participants.user_id', auth()->user()->id)
+            ->select('event_advertisements.advertisement_title', 'participants.event_advertisement_id', 'rf_statuses.status_name', 'participants.register_date')
+            ->orderBy('participants.register_date', 'desc')
+            ->paginate(9);
+
+
+
+
+        return view('eventManagement.registeredEvent', compact('registeredEvents'));
     }
 }

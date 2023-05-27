@@ -13,7 +13,7 @@ class Participant extends Model
 
     //these atributes should not be mass assignable
     protected $guarded=[
-        'advertisement_id',
+        'event_advertisement_id',
         'user_id',
         'register_date',
         'registration_status',
@@ -29,7 +29,7 @@ class Participant extends Model
     }
 
     public function statusCode():BelongsTo{
-        return $this->belongsTo(RF_Status::class);
+        return $this->belongsTo(RF_Status::class,'registration_status','status_code');
     }
 
     public function getAdditionalInformationAttribute(){
