@@ -36,7 +36,7 @@ class User extends Authenticatable
         'password',
         'address',
         'phone',
-        'role_id'
+        'role_code'
 
     ];
 
@@ -80,7 +80,7 @@ class User extends Authenticatable
     // each user have one role
     public function userRole(): BelongsTo
     {
-        return $this->belongsTo(UserRole::class);
+        return $this->belongsTo(UserRole::class, 'role_code', 'role_code');
     }
 
     public function participants():HasMany{
@@ -91,9 +91,9 @@ class User extends Authenticatable
         return $this->hasOne(Club::class);
     }
 
-    public function hasRole($role): bool
+    public function hasRole($roleCode): bool
     {
-        return $this->userRole->role_name === $role;
+        return $this->userRole->role_code === $roleCode;
     }
 
 }

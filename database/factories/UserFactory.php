@@ -40,8 +40,8 @@ class UserFactory extends Factory
             'current_team_id' => null,
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
-            'role_id' => $this->faker->randomElement(UserRole::all()->pluck('id')->toArray()),
-            
+            'role_code' => "UR01",
+
         ];
     }
 
@@ -78,5 +78,5 @@ class UserFactory extends Factory
         );
     }
 
-  
+
 }
