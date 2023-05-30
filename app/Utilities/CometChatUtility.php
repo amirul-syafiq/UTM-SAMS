@@ -23,7 +23,7 @@ class CometChatUtility
 
     public static function createCometChatUser($userInfo)
     {
-        $url = 'https://' . self::getAppId() . '.' . self::getRegion() . '.api.cometchat.io/v3/users';
+        $url = 'https://' . self::getAppId() . '.api-' . self::getRegion() . '.cometchat.io/v3/users';
 
         $payload = [
             'uid' => $userInfo->id,
@@ -42,16 +42,7 @@ class CometChatUtility
             'Content-Type' => 'application/json',
         ])->post($url, $payload);
 
-        // Check the response and handle accordingly
-        if ($response->successful()) {
-            // User created successfully
-            $responseData = $response->json();
-            // Additional logic or response handling
-        } else {
-            // Error occurred while creating the user
-            $errorData = $response->json();
-            // Additional error handling or response handling
-        }
+       return $response->json();
     }
 
 

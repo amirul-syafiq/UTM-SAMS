@@ -40,6 +40,8 @@ class User extends Authenticatable
 
     ];
 
+    protected $guarded= 'cometchat_auth_token';
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Utilities\CometChatUtility;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -23,7 +24,7 @@ class CreateNewUser implements CreatesNewUsers
         $messages = array(
             'email.regex' => 'The email must be a valid UTM email address.',
             'email.unique' => 'The email has already been registered.',
-            'utm_id' => 'UTM ID must be unique and not empty',
+            // 'utm_id' => 'UTM ID must be unique and not empty',
         );
 
 
@@ -40,14 +41,26 @@ class CreateNewUser implements CreatesNewUsers
 
         ], $messages)->validate();
 
-        return User::create([
+        $newUser = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'utm_id' => $input['utm_id'],
+            // 'utm_id' => $input['utm_id'],
             'password' => Hash::make($input['password']),
             'address' => $input['address'],
             'phone' => $input['phone'],
             'role_code' => $input['role'],
         ]);
+
+        $responseCometChat = CometChatUtility::createCometChatUser($newUser);
+
+        if ($responseCometChat['data']['authToken'] != null) {
+            $newUser->cometchat_auth_token = $responseCometChat['data']['authToken'];
+            $newUser->save();
+        } else {
+            $newUser->delete();
+            abort(400, 'Error creating user on CometChat');
+        }
+
+        return $newUser;
     }
 }
