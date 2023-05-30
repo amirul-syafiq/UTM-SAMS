@@ -22,9 +22,11 @@
                     <x-nav-link href="{{ route('event.viewEvent') }}" :active="request()->routeIs('event.viewEvent')">
                         {{ _('Club Event List') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('participant.viewEventRegistrationHistory') }}"
-                        :active="request()->routeIs('participant.viewEventRegistrationHistory')">
+                    <x-nav-link href="{{ route('participant.viewEventRegistrationHistory') }}" :active="request()->routeIs('participant.viewEventRegistrationHistory')">
                         {{ _('Registered Event') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('admin.userList') }}" :active="request()->routeIs('admin.userList')">
+                        {{ _('User List') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -168,6 +170,9 @@
 
             <x-responsive-nav-link href="{{ route('event.viewEvent') }}" :active="request()->routeIs('event.viewEvent')">
                 {{ __('My Events') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('participant.viewEventRegistrationHistory') }}" :active="request()->routeIs('participant.viewEventRegistrationHistory')">
+                {{ _('Registered Event') }}
             </x-responsive-nav-link>
         </div>
 

@@ -22,7 +22,7 @@
             {{-- Show the submit button if no other action is defined --}}
             @if (empty($actions))
                 <div class="flex justify-end mt-4">
-                    <x-button id="submitButton" name="submitButton">{{ $buttonText }}</x-button>
+                    <x-button  id="submitButton" name="submitButton">{{ $buttonText }}</x-button>
                 </div>
             @else
                 <div class="mt-10">

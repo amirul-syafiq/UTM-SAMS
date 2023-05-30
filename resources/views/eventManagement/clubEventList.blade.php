@@ -15,7 +15,7 @@
                 </div>
             @endif
 
-            <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
+            <div class="text-black bg-white overflow-auto shadow-xl sm:rounded-lg">
                 <table class="table-auto w-full">
                     <thead>
                         <tr class="bg-gray-100">

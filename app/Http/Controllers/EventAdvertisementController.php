@@ -16,7 +16,7 @@ class EventAdvertisementController extends Controller
     public function viewEventAdvertisementDetail($event_advertisement_id)
     {
 
-        $eventAdvertisement = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->find($event_advertisement_id);
+        $eventAdvertisement = EventAdvertisement::with('eventAdvertisementImage', 'event')->find($event_advertisement_id);
         $isRegistered = false;
         $isFull = false;
         $isClose = false;

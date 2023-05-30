@@ -14,6 +14,8 @@ class UserRole extends Model
 
     protected $primaryKey='role_code';
 
+    public $incrementing = false;
+
     private $role_name;
     private $role_description;
 
