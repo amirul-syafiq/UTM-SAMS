@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('deleted_at')->nullable();
             $table->string('role_code',5);
             $table->foreign('role_code')->references('role_code')->on('user_roles');
+            $table->string('cometchat_auth_token')->nullable();
         });
     }
 
