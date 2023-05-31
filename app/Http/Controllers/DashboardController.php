@@ -15,17 +15,15 @@ class DashboardController extends Controller
     {
 
 
-            // get all events with their images
-            $events = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->paginate(9);
+        $events = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')->where('advertisement_start_date', '<=', now())->where('advertisement_end_date', '>=', now())->paginate(9);
 
-            return view('dashboard', compact('events'));
-
+        return view('dashboard', compact('events'));
     }
 
     public function searchEvent(Request $request)
     {
         $eventFilters = [
-            ['event_type', '=', $request->event_type],
+            ['event_type', 'like', "%" . $request->event_type],
             ['event_start_date', '=', $request->event_start_date],
             ['event_end_date', '=', $request->event_end_date]
         ];
@@ -35,9 +33,9 @@ class DashboardController extends Controller
                 $query->whereHas('event', function ($query) use ($request) {
                     $query->where('event_name', 'like', '%' . $request->event_search_keyword . '%');
                 })
-                ->orWhereHas('tags', function ($query) use ($request) {
-                    $query->where('tags.tag_name', '=',$request->event_search_keyword);
-                });
+                    ->orWhereHas('tags', function ($query) use ($request) {
+                        $query->where('tags.tag_name', '=', $request->event_search_keyword);
+                    });
             })
             // ->whereHas('event', function ($query) use ($eventFilters) {
             //     $query->where($eventFilters);
