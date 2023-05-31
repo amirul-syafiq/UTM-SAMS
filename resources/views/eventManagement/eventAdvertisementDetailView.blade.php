@@ -10,6 +10,7 @@
             <img src="{{ $eventAdvertisement->eventAdvertisementImage->imageUrl }}" alt="Image"
                 class="aspect-w-4 aspect-h-3">
         </div>
+
         <div class="w-full md:w-1/2 overflow-auto">
             <x-custom-container>
                 <x-label>{{ __('Description') }}</x-label>
@@ -55,18 +56,27 @@
                     <div>
                         <p> {{ date('l d/m/Y H:i A', strtotime($eventAdvertisement->Event->event_end_date)) }}</p>
                     </div>
+                    <input type="hidden" id="eventOrganizer"
+                        value="{{ $eventAdvertisement->Event->event_organizer }}">
+
                 </div>
                 <div class="mt-8 text-center">
+                    <a href="" onclick="onClick()"
+                        class="bg-green-500 hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Chat</a>
                     @if (!$isRegistered && !$isFull)
                         <a href="{{ route('participant.create', ['event_id' => $eventAdvertisement->id]) }}"
                             class="bg-primary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Register
                             Now</a>
                     @elseif($isRegistered)
-                        <button disabled class="opacity-75 bg-secondary  text-white font-bold py-2  px-4 rounded">Already Register</button>
+                        <button disabled
+                            class="opacity-75 bg-secondary  text-white font-bold py-2  px-4 rounded">Already
+                            Register</button>
                     @elseif($isFull)
-                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration Full</button>
+                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration
+                            Full</button>
                     @elseif($isClose)
-                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration is closed</button>
+                        <button disabled class=" bg-secondary  text-white font-bold py-2  px-4 rounded">Registration is
+                            closed</button>
                     @endif
                 </div>
 
@@ -74,6 +84,19 @@
             </x-custom-container>
         </div>
     </div>
-
-
 </x-app-layout>
+
+
+
+<script>
+    function onClick() {
+        event.preventDefault();
+        var UID = document.getElementById('eventOrganizer').value;
+
+
+        CometChatWidget.chatWithUser(UID);
+        CometChatWidget.openOrCloseChat(true);
+        console.log("clicked");
+
+    }
+</script>

@@ -8,6 +8,7 @@ use App\Models\EventAdvertisementImage;
 use App\Models\Participant;
 use App\Models\Tags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,8 +30,8 @@ class EventAdvertisementController extends Controller
         elseif($eventAdvertisement->advertisement_start_date< now() || $eventAdvertisement->advertisement_end_date > now()){
             $isClose = true;
         }
-
-        return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement', 'isRegistered', 'isFull', 'isClose'));
+        $authToken=Auth::user()->cometchat_auth_token;
+        return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement', 'isRegistered', 'isFull', 'isClose', 'authToken'));
     }
 
     // To return the list of event advertisement for the club

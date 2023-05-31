@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
 
             <form action="{{ route('dashboard.search') }}" class="mb-2">
                 <label for="event_search_keyword"
@@ -41,4 +41,6 @@
             {{ $events->links() }}
         </div>
     </div>
+
+
 </x-app-layout>

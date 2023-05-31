@@ -22,7 +22,7 @@
         </div>
         <p class="text-gray-700 text-sm">{{ Str::limit($event->advertisement_description, 200, ' ...') }}</p>
         <br>
-        <p>
+        {{-- <p>
             tags:
             @foreach ($event->tags as $tag)
                 <span class="text-gray-700 text-sm">#{{ $tag->tag_name }}</span>
@@ -30,7 +30,7 @@
                     ,
                 @endif
             @endforeach
-        </p>
+        </p> --}}
     </div>
     <div class="align-text-bottom ">
         {{ $slot }}

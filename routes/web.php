@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CometChatController;
 use App\Http\Controllers\DashboardController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
@@ -60,8 +61,12 @@ Route::middleware([
     // Admin
     Route::get('/admin-user-list', [AdminController::class, 'userList'])->name('admin.userList');
     Route::match(['get', 'post'],'/admin-user-list-filter', [AdminController::class, 'filterUserList'])->name('admin.userListFilter');
-    Route::get('admin-user-edit/{user_id}', [AdminController::class, 'edit'])->name('admin.editUser');
-    Route::put('admin-user-update/{user_id}', [AdminController::class, 'update'])->name('admin.updateUser');
+    Route::get('/admin-user-edit/{user_id}', [AdminController::class, 'edit'])->name('admin.editUser');
+    Route::put('/admin-user-update/{user_id}', [AdminController::class, 'update'])->name('admin.updateUser');
+
+    // Comet Chat
+    Route::get('/chat',[CometChatController::class,'index']);
+
 });
 
 
