@@ -149,11 +149,12 @@ class EventAdvertisementController extends Controller
     public function appendAdditionalInformation($request)
     {
         $additionalInformation = "";
-        for($i=0; $i<=$request->inputCounter; $i++){
+
+        for($i=0; $i<=($request->inputCounter); $i++){
             // Check if the additional information is not empty (If user input additional information)
 
             if($request->has('additionalInformation'.$i)){
-                $additionalInformation .= $request['additionalInformation'.$i] . ", ";
+                $additionalInformation .=  $request['additionalInformation'.$i] . ", ";
             }
         }
 

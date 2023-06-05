@@ -70,8 +70,11 @@ class ParticipantController extends Controller
 
     public function viewParticipantList($eventAdvertisement_id)
     {
+        // Get the list of participants for the event advertisement
         $participants = Participant::with('user')->where('event_advertisement_id', $eventAdvertisement_id)->paginate(9);
+        //Get the event advertisement key for the json value stored
         $eventAdvertisement = EventAdvertisement::select('additional_information_key', 'id')->where('id', $eventAdvertisement_id)->first();
+
         $registrationStatuses = RF_Status::where('status_code', 'like', 'PR%')->pluck('status_name', 'status_code');
         return view('eventManagement.eventAdvertisementRegisteredParticipantList', compact('participants', 'eventAdvertisement', 'registrationStatuses'));
     }

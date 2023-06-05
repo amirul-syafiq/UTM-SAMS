@@ -118,7 +118,7 @@
             @if (!(isset($eventAdvertisement)))
             <p> To request additional information please specify below:</p>
             <p><i>Note: You cannot modify this section after submit</i></p>
-            <input type="number" hidden id="inputCounter" name="inputCounter" value=0>
+            <input type="number" hidden id="inputCounter" name="inputCounter" value=-1>
             <button type="button" onclick="addParticipantField()" class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add Field</button>
             @endif
             <div id="newInput"></div>
@@ -170,10 +170,16 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-    let inputCounter = 0;
+    let inputCounter = -1;
 
 
     function addParticipantField() {
+
+        inputCounter++;
+         // Update the hidden input field
+         const inputCounterField = document.getElementById('inputCounter');
+        inputCounterField.value = inputCounter;
+
         // Get the participant section element
         const participantSection = document.getElementById('newInput');
 
@@ -186,6 +192,9 @@
         newInput.type = 'text';
         newInput.id = `additionalInformation${inputCounter}`;
         newInput.name = `additionalInformation${inputCounter}`;
+        // Not allow comma to be inserted
+        newInput.pattern = "^[^,]*$";
+        newInput.title = "Comma is not allowed";
         newInput.placeholder = 'Enter additional information to be collected from the user';
         newInput.classList.add('border-gray-300', 'dark:border-gray-700', 'dark:bg-gray-900', 'dark:text-gray-300', 'focus:border-indigo-500', 'dark:focus:border-indigo-600', 'focus:ring-indigo-500', 'dark:focus:ring-indigo-600', 'rounded-md', 'shadow-sm', 'block', 'mt-1', 'w-full');
         newInput.classList.add('input-field');
@@ -204,8 +213,6 @@
         // Append the field container to the participant section element
         participantSection.appendChild(fieldContainer);
 
-        // Increment the counter for the next iteration
-        inputCounter++;
     }
 
     function removeParticipantField(fieldContainer) {
@@ -221,6 +228,10 @@
             input.name = `additionalInformation${index}`;
             input.id = `additionalInformation${index}`;
         });
+        inputCounter--;
+        // Update the hidden input field
+        const inputCounterField = document.getElementById('inputCounter');
+        inputCounterField.value = inputCounter;
     }
 
 

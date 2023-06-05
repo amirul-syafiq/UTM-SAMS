@@ -56,6 +56,13 @@ class EventAdvertisement extends Model
         $additionalInformationArray = array_filter($additionalInformationArray);
         $additionalInformationArray = array_values($additionalInformationArray);
 
+        foreach ($additionalInformationArray as &$element) {
+            $element = str_replace(' ', '', ucwords($element));
+        }
+
+        unset($element); // Unset the reference to the last element to avoid potential issues
+
+
         return $additionalInformationArray;
     }
 }
