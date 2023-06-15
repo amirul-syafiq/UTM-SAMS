@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 })
                     ->orWhereHas('tags', function ($query) use ($request) {
                         $query->where('tags.tag_name', '=', $request->event_search_keyword);
-                    });
+                    })->orWhere('advertisement_title', 'like', '%' . $request->event_search_keyword . '%');
             })
             // ->whereHas('event', function ($query) use ($eventFilters) {
             //     $query->where($eventFilters);

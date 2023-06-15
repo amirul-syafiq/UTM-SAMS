@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     ];
 
-    protected $guarded= 'cometchat_auth_token';
+    protected $guarded = 'cometchat_auth_token';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -85,11 +85,13 @@ class User extends Authenticatable
         return $this->belongsTo(UserRole::class, 'role_code', 'role_code');
     }
 
-    public function participants():HasMany{
+    public function participants(): HasMany
+    {
         return $this->hasMany(Participant::class);
     }
 
-    public function club():HasOne{
+    public function club(): HasOne
+    {
         return $this->hasOne(Club::class);
     }
 
@@ -97,5 +99,4 @@ class User extends Authenticatable
     {
         return $this->userRole->role_code === $roleCode;
     }
-
 }

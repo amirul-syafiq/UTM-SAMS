@@ -64,6 +64,18 @@ class RF_Status_seeder extends Seeder
                 'status_name' => 'Rejected',
                 'status_description' => 'Participant registration has been rejected',
             ],
+
+            // Ecertificate Status
+            [
+                'status_code' => 'EC01',
+                'status_name' => 'Not Available for download',
+                'status_description' => 'Ecertificate is not available for download',
+            ],
+            [
+                'status_code' => 'EC02',
+                'status_name' => 'Available for download',
+                'status_description' => 'Ecertificate is available for download',
+            ]
         ];
 
         DB::table('rf_statuses')->insert($data);

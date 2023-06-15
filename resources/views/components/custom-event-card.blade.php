@@ -12,9 +12,7 @@
         </div>
     </div>
 
-
-
-    <div class="p-4 h-64" name="detailDiv" >
+    <div class="p-4 h-64" name="detailDiv">
         <h3 class="font-semibold text-lg mb-2">{{ $event->advertisement_title }}</h3>
         <h4 class="font-semibold text-lg mb-2">{{ $event->event->event_name }}</h4>
         <div class="text-gray-600 text-sm mb-2">
@@ -22,15 +20,6 @@
         </div>
         <p class="text-gray-700 text-sm">{{ Str::limit($event->advertisement_description, 200, ' ...') }}</p>
         <br>
-        {{-- <p>
-            tags:
-            @foreach ($event->tags as $tag)
-                <span class="text-gray-700 text-sm">#{{ $tag->tag_name }}</span>
-                @if (!$loop->last)
-                    ,
-                @endif
-            @endforeach
-        </p> --}}
     </div>
     <div class="align-text-bottom ">
         {{ $slot }}

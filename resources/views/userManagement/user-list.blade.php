@@ -78,13 +78,7 @@
                                 <td class="border px-4 py-2">
                                     <a href="{{ route('admin.editUser', $user->id) }}"
                                         class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2 px-4 rounded">Edit</a>
-                                    {{-- <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                    class="inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button
-                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                                                </form> --}}
+
                                 </td>
                             </tr>
                         @endforeach

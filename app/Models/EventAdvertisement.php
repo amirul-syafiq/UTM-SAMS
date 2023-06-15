@@ -23,7 +23,6 @@ class EventAdvertisement extends Model
 
     protected $guarded = [
         'event_id',
-        'ecertificate_s3_key',
         'advertisement_status',
         'additional_information_key',
     ];
