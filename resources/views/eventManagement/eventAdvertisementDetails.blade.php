@@ -143,8 +143,6 @@
 </x-app-layout>
 
 <script>
-
-
     function previewImage(event) {
         // Get the file input element
         const input = event.target;

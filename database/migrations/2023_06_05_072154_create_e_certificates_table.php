@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('ecertificate_description')->nullable();
             $table->string('ecertificate_status',5)->default('EC01');
             $table->foreign('ecertificate_status')->references('status_code')->on('rf_statuses');
-            $table->json('ecertificate_attribute_key_value');
+            $table->json('ecertificate_attribute_key_value')->nullable();
             $table->foreignId('event_advertisement_id')->constrained('event_advertisements')->nullable();
             $table->string('ecertificate_s3_key');
 

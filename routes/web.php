@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CometChatController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ECertificateController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
@@ -67,6 +68,10 @@ Route::middleware([
     // Comet Chat
     Route::get('/chat',[CometChatController::class,'index']);
 
+    // ECertificate
+
+    Route::get('create-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'create'])->name('ecert.create');
+    Route::post('store-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'store'])->name('ecert.store');
 });
 
 

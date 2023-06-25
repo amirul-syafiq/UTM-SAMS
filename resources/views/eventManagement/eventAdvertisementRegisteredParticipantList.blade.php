@@ -9,6 +9,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg mt-5">
+
+            <a href="{{ route('ecert.create', ['eventAdvertisementId' => $eventAdvertisement->id]) }}"
+                class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">{{ __('E-Certificate') }}
+            </a>
+
             <table class="table-auto w-full">
                 <thead>
                     <tr class="bg-gray-100">
@@ -25,12 +30,12 @@
                 </thead>
                 <tbody>
                     @php
-                        $index=($participants->currentPage()-1)*$participants->perPage();
+                        $index = ($participants->currentPage() - 1) * $participants->perPage();
                     @endphp
                     @foreach ($participants as $participant)
                         <tr>
-                            <td class="border px-4 py-2">{{$index +$loop->iteration }}</td>
-                            <td class="border px-4 py-2" name="{{ 'participant_name' .$loop->iteration }}">
+                            <td class="border px-4 py-2">{{ $index + $loop->iteration }}</td>
+                            <td class="border px-4 py-2" name="{{ 'participant_name' . $loop->iteration }}">
                                 {{ $participant->user->name }}</td>
                             <td class="border px-4 py-2" name="{{ 'participant_email' . $loop->iteration }}">
                                 {{ $participant->user->email }}</td>
@@ -80,9 +85,9 @@
                     @endforeach
                 </tbody>
             </table>
-           <div class="p-2">
-            {{ $participants->links() }}
-           </div>
+            <div class="p-2">
+                {{ $participants->links() }}
+            </div>
         </div>
     </div>
 
@@ -115,7 +120,7 @@
             registrationStatusDropdown{{ $loop->iteration }}.addEventListener('change', function() {
                 // Store the previous value in a data attribute of the dropdown
                 this.setAttribute('data-previous-value',
-                registrationStatusValue{{ $loop->iteration }});
+                    registrationStatusValue{{ $loop->iteration }});
 
                 var newSelectedOption{{ $loop->iteration }} = this.options[this.selectedIndex];
                 var newRegistrationStatusValue{{ $loop->iteration }} =
@@ -169,7 +174,7 @@
 
             // Update the view_status span with the previous label
             var previousLabel = registrationStatusDropdown.options[registrationStatusDropdown.selectedIndex]
-            .textContent;
+                .textContent;
             document.querySelector('#view_status' + loop_iteration).textContent = previousLabel;
         }
     }

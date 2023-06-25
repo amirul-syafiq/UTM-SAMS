@@ -90,6 +90,7 @@ class AdminController extends Controller
     {
         $user = User::find($user_id);
         // Validate input
+
         $request->validate([
             'user_name' => 'required',
             'user_utm_id' => 'required|unique:users,utm_id,' . $user_id,
@@ -97,7 +98,6 @@ class AdminController extends Controller
             'user_address' => 'required',
             'user_phone' => 'required',
             'user_role' => 'required',
-
         ]);
 
         $user->name = $request->user_name;
