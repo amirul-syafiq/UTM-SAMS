@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\ECertificate;
+use App\Models\Event;
 use App\Models\EventAdvertisement;
+use App\Models\Participant;
 use App\Models\RF_Status;
+use Aws\Endpoint\Partition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\App;
 
 class ECertificateController extends Controller
 {
@@ -17,14 +22,14 @@ class ECertificateController extends Controller
         $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
 
         // get ecert status list
-        $ecertStatusList= RF_Status::where('status_code','like', 'EC%')->pluck('status_name', 'status_code');
+        $ecertStatusList = RF_Status::where('status_code', 'like', 'EC%')->pluck('status_name', 'status_code');
         return view('eCertificate.ecert-create', compact('ecertSVG', 'ecertStatusList', 'event_advertisement_id'));
     }
 
     public function validateFile($request)
     {
         // Custom messages checking file is uploaded and file type
-        $message=[
+        $message = [
             'ecertSVG.required' => 'Please upload a file',
             'ecertSVG.mimes' => 'Please upload a valid svg file',
             'ecertStatus.required' => 'Please select a status'
@@ -33,7 +38,7 @@ class ECertificateController extends Controller
         Validator::make($request->all(), [
             'ecertSVG' => 'required|mimes:svg',
             'ecertStatus' => 'required'
-        ],$message)->validate();
+        ], $message)->validate();
 
 
         // Check the svg file content necessary placeholders
@@ -45,6 +50,19 @@ class ECertificateController extends Controller
         // Validate the file
         $this->validateFile($request);
 
+        // // Get the svg file and convert to xml to read the text content
+        // $uploadedFile = $request->file('ecertSVG');
+        // $svgFilePath = $uploadedFile->getPathname();
+
+        // $xml = simplexml_load_file($svgFilePath);
+        // $textElements = $xml->xpath('//text()');
+
+        // // Get the text content from the svg file
+        // foreach ($textElements as $textElement) {
+        //     $textContent = (string) $textElement;
+        // }
+
+        // Get the ecert data from the database
         $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
         $s3 = Storage::disk('s3');
         // If is null, create a new ecert
@@ -74,6 +92,69 @@ class ECertificateController extends Controller
 
     public function generateEcert($event_advertisement_id)
     {
+        $eventData = EventAdvertisement::where('id', $event_advertisement_id)->with('event', 'eCertificate')->first();
+        // Check user is a participant for the event
+        $isParticipant = Participant::where('event_advertisement_id', $event_advertisement_id)->where('user_id', auth()->user()->id)->first();
+        if (!$isParticipant) {
+            return redirect()->back()->with('error', 'You are not a participant for this event');
+        }
 
+        // Get the ecert data from the database
+        $ecert = $eventData->eCertificate;
+
+        // Check ecert is available
+        if (!$ecert) {
+            return redirect()->back()->with('error', 'E-Certificate is not available');
+        }
+
+        // Read the svg content from the s3 bucket
+        $s3 = Storage::disk('s3');
+        $contents = $s3->get($ecert->ecertificate_s3_key);
+        // Get the svg file and convert to xml to read the text content
+        $tempFilePath = tempnam(sys_get_temp_dir(), 'svg');
+        file_put_contents($tempFilePath, $contents);
+        $xml = simplexml_load_file($tempFilePath);
+
+        // Find any word in the xml which contains $ sign
+
+
+        // Only text with $ sign will taken
+        $textElements = $xml->xpath('//text()[contains(., "$")]');
+
+        // Iterate the text elements and replace the necessary placeholders
+        foreach ($textElements as $textElement) {
+            $textContent = trim((string) $textElement);
+
+            switch ($textContent) {
+                // CAPS LOCK PARTICIPANT NAME
+                case '$PARTICIPANTNAME':
+                    $textElement[0] = strtoupper($isParticipant->user->name);
+                    break;
+                case '$participantName':
+                    $textElement[0] = $isParticipant->user->name;
+                    break;
+                case '$eventName':
+                    $textElement[0] = $eventData->event->event_name;
+                    break;
+                case '$eventStartDate':
+                    $textElement[0] = $eventData->event->event_start_date;
+                    break;
+                case '$eventEndDate':
+                    $textElement[0] = $eventData->event->event_end_date;
+                    break;
+                case '$eventLocation':
+                    $textElement[0] = $eventData->event->event_location;
+                    break;
+                default:
+                    // No replacement needed for other text elements
+                    break;
+            }
+        }
+        $ecertSVG = $xml->asXML();
+        // Convert the svg to base64
+        $dataUri = 'data:image/svg+xml;base64,' . base64_encode($ecertSVG);
+
+
+        return view('eCertificate.ecert-view', compact('dataUri','ecertSVG'));
     }
 }

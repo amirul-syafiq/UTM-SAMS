@@ -47,6 +47,11 @@ class EventAdvertisement extends Model
         return $this->BelongsToMany(Tags::class, 'event_advertisement_tags', 'event_advertisement_id', 'tag_name');
     }
 
+    public function eCertificate(): HasOne
+    {
+        return $this->hasOne(ECertificate::class);
+    }
+
     // To get array of additional information data
     public function getAdditionalInformationsAttribute()
     {

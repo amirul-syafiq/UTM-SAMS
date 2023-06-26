@@ -24,9 +24,32 @@
                             </td>
                             <td class="border px-4 py-2">{{ $registeredEvent->advertisement_title }}</td>
                             <td class="border px-4 py-2">{{ $registeredEvent->status_name }}</td>
-                            <td class="border px-4 py-2">
-                                <a href="{{ route('event-advertisement.view',$registeredEvent->event_advertisement_id) }}"
-                                    class="bg-primary-bg hover:bg-accent-2 hover:text-black text-white font-bold mt-1 py-1 px-2 rounded">View Detail</a>
+                            <td class="text-left border px-4 py-2">
+                                <button type="button"
+                                    onclick="location.href='{{ route('event-advertisement.view', $registeredEvent->event_advertisement_id) }}'"
+                                    class="bg-primary-bg hover:bg-accent-2 hover:text-black text-white font-bold mt-1 py-1 px-2 rounded min-w-full">
+                                    View Detail
+                                </button>
+
+                                {{-- Check if ecert is set avalaible --}}
+
+                                @if ($registeredEvent->ecertificate_status == 'EC02')
+                                    <div class="min-w-[8rem]">
+                                        <button type="button"
+                                            class="bg-[#104554] hover:bg-accent-2 hover:text-black text-white font-bold mt-1 py-1 px-2 rounded min-w-full">
+                                            <a href="{{ route('ecert.generate', $registeredEvent->event_advertisement_id) }}"
+                                                target="_blank">
+                                                View E-Certificate</a>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="min-w-[8rem]">
+                                        <button type="button" title="Certificate Not available to download"
+                                            class="opacity-70 bg-secondary text-white font-bold mt-1 py-1 px-2 rounded pointer-events-none min-w-full"
+                                            disabled>E-Certificate Not Available</button>
+                                    </div>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach

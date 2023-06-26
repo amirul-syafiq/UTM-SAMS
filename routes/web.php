@@ -69,9 +69,12 @@ Route::middleware([
     Route::get('/chat',[CometChatController::class,'index']);
 
     // ECertificate
-
+    // Redirect to ecertificate upload form
     Route::get('create-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'create'])->name('ecert.create');
     Route::post('store-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'store'])->name('ecert.store');
+
+    // Generate ecertificate for the participant
+    Route::get('generate-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'generateEcert'])->name('ecert.generate');
 });
 
 

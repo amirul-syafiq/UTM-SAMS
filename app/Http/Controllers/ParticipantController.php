@@ -95,12 +95,10 @@ class ParticipantController extends Controller
         $registeredEvents = Participant::join('event_advertisements', 'participants.event_advertisement_id', '=', 'event_advertisements.id')
             ->leftJoin('rf_statuses', 'participants.registration_status', '=', 'rf_statuses.status_code')
             ->where('participants.user_id', auth()->user()->id)
-            ->select('event_advertisements.advertisement_title', 'participants.event_advertisement_id', 'rf_statuses.status_name', 'participants.register_date')
+            ->leftJoin('e_certificates', 'participants.event_advertisement_id', '=', 'e_certificates.event_advertisement_id')
+            ->select('event_advertisements.advertisement_title', 'participants.event_advertisement_id', 'rf_statuses.status_name', 'participants.register_date','e_certificates.ecertificate_status')
             ->orderBy('participants.register_date', 'desc')
             ->paginate(9);
-
-
-
 
         return view('eventManagement.registeredEvent', compact('registeredEvents'));
     }
