@@ -33,13 +33,14 @@
 
                                 {{-- Check if ecert is set avalaible --}}
 
-                                @if ($registeredEvent->ecertificate_status == 'EC02')
+                                @if ($registeredEvent->ecertificate_status == 'EC02' && $registeredEvent->status_code == 'PR02')
                                     <div class="min-w-[8rem]">
                                         <button type="button"
                                             class="bg-[#104554] hover:bg-accent-2 hover:text-black text-white font-bold mt-1 py-1 px-2 rounded min-w-full">
                                             <a href="{{ route('ecert.generate', $registeredEvent->event_advertisement_id) }}"
                                                 target="_blank">
-                                                View E-Certificate</a>
+                                                View E-Certificate
+                                            </a>
                                         </button>
                                     </div>
                                 @else

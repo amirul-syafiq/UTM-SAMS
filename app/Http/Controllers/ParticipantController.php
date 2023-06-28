@@ -96,7 +96,7 @@ class ParticipantController extends Controller
             ->leftJoin('rf_statuses', 'participants.registration_status', '=', 'rf_statuses.status_code')
             ->where('participants.user_id', auth()->user()->id)
             ->leftJoin('e_certificates', 'participants.event_advertisement_id', '=', 'e_certificates.event_advertisement_id')
-            ->select('event_advertisements.advertisement_title', 'participants.event_advertisement_id', 'rf_statuses.status_name', 'participants.register_date','e_certificates.ecertificate_status')
+            ->select('event_advertisements.advertisement_title', 'participants.event_advertisement_id','rf_statuses.status_code' ,'rf_statuses.status_name', 'participants.register_date','e_certificates.ecertificate_status')
             ->orderBy('participants.register_date', 'desc')
             ->paginate(9);
 

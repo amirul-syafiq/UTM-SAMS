@@ -30,6 +30,5 @@
             <x-input type="text" name="{{ $camelCaseName }}" placeholder="{{ $additionalInformation }}" />
         @endforeach
 
-
     </x-custom-form>
 </x-app-layout>

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->foreignId('event_advertisement_id')->constrained('event_advertisements')->nullable();
             $table->string('ecertificate_s3_key');
 
-
         });
     }
 

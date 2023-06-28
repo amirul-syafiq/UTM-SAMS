@@ -67,6 +67,11 @@ class RF_Status_seeder extends Seeder
 
             // Ecertificate Status
             [
+                'status_code' => 'EC00',
+                'status_name' => 'Template for ecertificate',
+                'status_description' => 'Only for template purpose.',
+            ],
+            [
                 'status_code' => 'EC01',
                 'status_name' => 'Not Available for download',
                 'status_description' => 'Ecertificate is not available for download',

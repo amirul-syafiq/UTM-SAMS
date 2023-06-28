@@ -73,6 +73,9 @@ Route::middleware([
     Route::get('create-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'create'])->name('ecert.create');
     Route::post('store-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'store'])->name('ecert.store');
 
+    //Set ecert from template
+    Route::get('use-template-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'useEcertTemplate'])->name('ecert.useTemplate');
+
     // Generate ecertificate for the participant
     Route::get('generate-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'generateEcert'])->name('ecert.generate');
 });

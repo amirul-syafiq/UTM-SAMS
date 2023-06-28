@@ -12,6 +12,12 @@
         <div class="flex flex-col md:flex-row">
             {{-- First Column to upload and display image --}}
             <div class="w-full md:w-2/5 md:pr-4">
+                {{-- Button for user to use template provided --}}
+                <div class="mb-2">
+                    <a href="{{ route('ecert.useTemplate', ['eventAdvertisementId' => $event_advertisement_id]) }}"
+                        class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Use
+                        Template</a>
+                </div>
                 <div class="mb-2">
                     <x-label for="ecertSVG" value="{{ __('Upload Image') }}" />
                     <input type="file" name="ecertSVG" id="ecertSVG" onchange="previewImage(event)"
@@ -31,20 +37,12 @@
 
             {{-- Second column to set ecert details --}}
             <div class="w-full md:w-3/5">
-            {{-- Set e certificate is available to be download by user --}}
+                {{-- Set e certificate is available to be download by user --}}
                 <div class="mb-2">
-                    <x-custom-dropdown name="ecertStatus" :options="$ecertStatusList" :selected="$ecertSVG->ecertificate_status ?? 'old(ecertStatusList)'" label="Ecertificate Status" />
+                    <x-custom-dropdown name="ecertStatus" :options="$ecertStatusList" :selected="$ecertSVG->ecertificate_status ?? 'old(ecertStatusList)'"
+                        label="Ecertificate Status" />
                 </div>
 
-                {{-- Dynamic field where user enter the variable name, then the value can be selected from dropdown of eventadvertisementattributes --}}
-                {{-- <input type="number" hidden id="inputCounter" name="inputCounter" value=0>
-                <button type="button" onclick="addECertDataField()"
-                    class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">Add
-                    Value</button>
-
-                    <div class="mb-2">
-                        <div id="ecertDataField"></div>
-                    </div>--}}
             </div>
         </div>
     </x-custom-form>
@@ -112,4 +110,6 @@
         container.appendChild(fieldContainer);
 
     }
+
+
 </script>

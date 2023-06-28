@@ -22,7 +22,12 @@ class ECertificateController extends Controller
         $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
 
         // get ecert status list
-        $ecertStatusList = RF_Status::where('status_code', 'like', 'EC%')->pluck('status_name', 'status_code');
+        $ecertStatusList = RF_Status::where('status_code', 'like', 'EC%')
+            // Exclude template status
+            ->where('status_code', '!=', 'EC00')
+            ->pluck('status_name', 'status_code');
+
+
         return view('eCertificate.ecert-create', compact('ecertSVG', 'ecertStatusList', 'event_advertisement_id'));
     }
 
@@ -45,22 +50,33 @@ class ECertificateController extends Controller
 
     }
 
+    // Function use to store file from template
+    public function useEcertTemplate($event_advertisement_id)
+    {
+        // Get the ecert template
+        $ecertTemplate = ECertificate::where('ecertificate_status', 'like', 'EC00')->first();
+        $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
+
+
+        // Store ecert file name based on the event advertisement id
+        $ecertFileName = 'ECertEV' . $event_advertisement_id . '.svg';
+
+        // Use the template path as the file path
+        $filePath = $ecertTemplate->ecertificate_s3_key;
+
+         // Save all ecert data
+         $ecertSVG->ecertificate_name = $ecertFileName;
+         $ecertSVG->ecertificate_status = "EC02";
+         $ecertSVG->ecertificate_s3_key = $filePath;
+         $ecertSVG->event_advertisement_id = $event_advertisement_id;
+         $ecertSVG->save();
+
+    }
+
     public function store(Request $request, $event_advertisement_id)
     {
         // Validate the file
         $this->validateFile($request);
-
-        // // Get the svg file and convert to xml to read the text content
-        // $uploadedFile = $request->file('ecertSVG');
-        // $svgFilePath = $uploadedFile->getPathname();
-
-        // $xml = simplexml_load_file($svgFilePath);
-        // $textElements = $xml->xpath('//text()');
-
-        // // Get the text content from the svg file
-        // foreach ($textElements as $textElement) {
-        //     $textContent = (string) $textElement;
-        // }
 
         // Get the ecert data from the database
         $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
@@ -115,18 +131,16 @@ class ECertificateController extends Controller
         file_put_contents($tempFilePath, $contents);
         $xml = simplexml_load_file($tempFilePath);
 
-        // Find any word in the xml which contains $ sign
-
 
         // Only text with $ sign will taken
-        $textElements = $xml->xpath('//text()[contains(., "$")]');
+        $textElements = $xml->xpath('//text()[contains(., "$")] | //path[contains(string(.), "$")] | //tspan[contains(., "$")] | //textPath[contains(string(.), "$")] | //a[contains(., "$")] | //tref[contains(., "$")] | //altGlyph[contains(., "$")]');
 
         // Iterate the text elements and replace the necessary placeholders
         foreach ($textElements as $textElement) {
             $textContent = trim((string) $textElement);
 
             switch ($textContent) {
-                // CAPS LOCK PARTICIPANT NAME
+                    // CAPS LOCK PARTICIPANT NAME
                 case '$PARTICIPANTNAME':
                     $textElement[0] = strtoupper($isParticipant->user->name);
                     break;
@@ -155,6 +169,6 @@ class ECertificateController extends Controller
         $dataUri = 'data:image/svg+xml;base64,' . base64_encode($ecertSVG);
 
 
-        return view('eCertificate.ecert-view', compact('dataUri','ecertSVG'));
+        return view('eCertificate.ecert-view', compact('dataUri', 'ecertSVG'));
     }
 }
