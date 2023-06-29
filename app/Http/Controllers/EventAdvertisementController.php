@@ -137,11 +137,15 @@ class EventAdvertisementController extends Controller
     public function eventAdvertisementForm($event_id, $event_advertisement_id = null)
     {
         $clubEvent = Event::find($event_id);
+        // if eventAdvertisement already exist, retrieve the information
         if ($event_advertisement_id) {
             $eventAdvertisement = EventAdvertisement::find($event_advertisement_id);
-            return view('eventManagement.eventAdvertisementDetails', compact('eventAdvertisement', 'clubEvent'));
+            return view('eventManagement.eventAdvertisementDetails',
+                        compact('eventAdvertisement', 'clubEvent'));
+
         } else {
-            return view('eventManagement.eventAdvertisementDetails', compact('clubEvent'));
+            return view('eventManagement.eventAdvertisementDetails',
+                        compact('clubEvent'));
         }
     }
 

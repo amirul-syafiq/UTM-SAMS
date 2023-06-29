@@ -61,12 +61,12 @@ Route::middleware([
 
     // Admin
     Route::get('/admin-user-list', [AdminController::class, 'userList'])->name('admin.userList');
-    Route::match(['get', 'post'],'/admin-user-list-filter', [AdminController::class, 'filterUserList'])->name('admin.userListFilter');
+    Route::match(['get', 'post'], '/admin-user-list-filter', [AdminController::class, 'filterUserList'])->name('admin.userListFilter');
     Route::get('/admin-user-edit/{user_id}', [AdminController::class, 'edit'])->name('admin.editUser');
     Route::put('/admin-user-update/{user_id}', [AdminController::class, 'update'])->name('admin.updateUser');
 
     // Comet Chat
-    Route::get('/chat',[CometChatController::class,'index']);
+    Route::get('/chat', [CometChatController::class, 'index']);
 
     // ECertificate
     // Redirect to ecertificate upload form
@@ -79,5 +79,3 @@ Route::middleware([
     // Generate ecertificate for the participant
     Route::get('generate-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'generateEcert'])->name('ecert.generate');
 });
-
-

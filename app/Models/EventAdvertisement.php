@@ -13,6 +13,7 @@ class EventAdvertisement extends Model
 {
     use HasFactory;
 
+    // attributes that are mass assignable
     protected $fillable = [
         'advertisement_title',
         'advertisement_description',
@@ -21,32 +22,38 @@ class EventAdvertisement extends Model
         'participant_limit',
     ];
 
+    // attributes that are not mass assignable
     protected $guarded = [
         'event_id',
         'advertisement_status',
         'additional_information_key',
     ];
 
+    // Define relationship with Event model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
 
+    // Define relationship with EventAdvertisementImage model
     public function eventAdvertisementImage(): HasOne
     {
         return $this->hasOne(EventAdvertisementImage::class);
     }
 
+    // Define relationship with Participant model
     public function participants(): HasMany
     {
         return $this->hasMany(Participant::class);
     }
 
+    // Define relationship with EventAdvertisementTag model
     public function tags(): BelongsToMany
     {
         return $this->BelongsToMany(Tags::class, 'event_advertisement_tags', 'event_advertisement_id', 'tag_name');
     }
 
+    // Define relationship with ECertificate model
     public function eCertificate(): HasOne
     {
         return $this->hasOne(ECertificate::class);

@@ -16,27 +16,29 @@ class AdminController extends Controller
     //     }
     // }
 
+    // This function is used to display the user list
     public function userList()
     {
-        // Check if user is admin
+        // Check if user is admin or not, if not redirect to not-authorized page
         if (auth()->user()->role_code !== 'UR04') {
 
             return view('not-authorized');
         }
 
+        // Get all users from database and paginate it by 9
         $users = User::select('id', 'name', 'utm_id', 'email', 'address', 'phone', 'role_code')
             ->orderBy('name')
             ->paginate(9);
 
+        // Get all roles from database
         $roles = UserRole::pluck('role_name', 'role_code');
 
+        // Check for every user, if the role_code is in the roles collection, replace it with the role_name
         foreach ($users as $user) {
             if ($roles->has($user->role_code)) {
                 $user->role_code = $roles->get($user->role_code);
             }
         }
-
-
 
         return view('userManagement.user-list', compact('users', 'roles'));
     }

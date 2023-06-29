@@ -13,19 +13,26 @@
 
     <x-custom-container>
 
-        <p>Please be informed by registering to this event, your profile will be shared with the organizer</p>
+        <p>Please be informed by registering to this event, your profile will be
+            shared with the organizer</p>
 
 
     </x-custom-container>
+    {{-- Form to request additional information --}}
     <x-custom-form method="{{ $formAction['method'] ?? 'POST' }}"
         title="Please fill in the additional detail required by the organizer"
-        action="{{ route($formAction['route'] ?? 'participant.store', ['event_id' => $eventAdvertisement->id]) }}"
+        action="{{ route($formAction['route'] ?? 'participant.store',
+                ['event_id' => $eventAdvertisement->id]) }}"
         buttonText="Register">
 
+        {{-- Iterate the list of additional information that is requested by organizer --}}
         @foreach ($eventAdvertisement->additional_informations as $additionalInformation)
             @php
+                // Convert the additional information to camel case
                 $camelCaseName = str_replace(' ', '', ucwords($additionalInformation));
             @endphp
+
+           {{-- Dynamically display the input field --}}
             <x-label>{{ $additionalInformation }}</x-label>
             <x-input type="text" name="{{ $camelCaseName }}" placeholder="{{ $additionalInformation }}" />
         @endforeach

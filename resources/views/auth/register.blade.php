@@ -4,8 +4,10 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        {{-- Import error message component --}}
         <x-validation-errors class="mb-4" />
 
+        {{-- Form for user registration --}}
         <form method="POST" action="{{ route('register') }}">
             @csrf
 

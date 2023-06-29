@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class CometChatUtility
 {
+
     public static function getApiKey()
     {
         return config('cometchat.api_key');
@@ -21,10 +22,13 @@ class CometChatUtility
         return config('cometchat.region');
     }
 
+    // Create a user on CometChat API
     public static function createCometChatUser($userInfo)
     {
+        // Set the URL for the API request to create a user
         $url = 'https://' . self::getAppId() . '.api-' . self::getRegion() . '.cometchat.io/v3/users';
 
+        // Set the payload for the API request to create a user
         $payload = [
             'uid' => $userInfo->id,
             'name' => $userInfo->name,
@@ -36,7 +40,7 @@ class CometChatUtility
             'withAuthToken' => true
         ];
 
-
+        // Send the API request to create a user
         $response = Http::withHeaders([
             'apikey' => self::getApiKey(),
             'Content-Type' => 'application/json',

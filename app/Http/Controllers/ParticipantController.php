@@ -30,19 +30,31 @@ class ParticipantController extends Controller
         return true;
     }
 
+    //Function to create a new participant
     public function create($event_advertisement_id)
     {
+        // Get the event advertisement
+
         $eventAdvertisement = EventAdvertisement::find($event_advertisement_id);
 
-        //
+        //Check if the user is already registered for the event
+        // If yes, redirect to the event advertisement view page with error message
         if (!$this->isRegistered($eventAdvertisement)) {
-            return redirect()->route('event-advertisement.view', $event_advertisement_id)->with('error', 'You are already registered for this event');
-        } elseif (!$this->isReachParticipantLimit($eventAdvertisement)) {
-            return redirect()->route('event-advertisement.view', $event_advertisement_id)->with('error', 'The participant limit is reached');
+            return redirect()
+                    ->route('event-advertisement.view', $event_advertisement_id)
+                    ->with('error', 'You are already registered for this event');
+        }
+        // Else, check if the participant limit is reached
+        // If yes, redirect to the event advertisement view page with error message
+        elseif (!$this->isReachParticipantLimit($eventAdvertisement)) {
+            return redirect()
+            ->route('event-advertisement.view', $event_advertisement_id)
+            ->with('error', 'The participant limit is reached');
         }
 
-
-        return view('eventManagement.participantRegistration', compact('eventAdvertisement'));
+        // Else, return the participant registration view
+        return view('eventManagement.participantRegistration',
+                    compact('eventAdvertisement'));
     }
 
     public function store(Request $request, $event_advertisement_id)

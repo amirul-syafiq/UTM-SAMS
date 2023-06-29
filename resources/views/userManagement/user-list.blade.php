@@ -58,6 +58,7 @@
                 @if (isset($filter))
                     <p class="m-2 text-gray-400"> <i>{{ $filter }}</i></p>
                 @endif
+                {{-- Display table user --}}
                 <table class=" text-black table-auto w-full">
                     <thead>
                         <tr class=" bg-gray-100">
@@ -69,7 +70,7 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        {{-- Iterate the users list --}}
                         @foreach ($users as $user)
                             <tr class="hover:bg-slate-400">
                                 <td class="border px-4 py-2">{{ $user->name }}</td>
@@ -78,7 +79,8 @@
                                 <td class="border px-4 py-2">{{ $user->role_code }}</td>
                                 <td class="border px-4 py-2">
                                     <a href="{{ route('admin.editUser', $user->id) }}"
-                                        class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2 px-4 rounded">Edit</a>
+                                        class="bg-secondary hover:bg-accent-2 hover:text-black
+                                         text-white font-bold py-2 px-4 rounded">Edit</a>
 
                                 </td>
                             </tr>

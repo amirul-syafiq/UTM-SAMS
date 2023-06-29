@@ -40,11 +40,13 @@ class User extends Authenticatable
 
     ];
 
+    // Attributes that is guarded from mass assignment
     protected $guarded = 'cometchat_auth_token';
+
 
     /**
      * The attributes that should be hidden for serialization.
-     *
+
      * @var array<int, string>
      */
     protected $hidden = [
@@ -53,6 +55,7 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+
 
     /**
      * The attributes that should be cast.

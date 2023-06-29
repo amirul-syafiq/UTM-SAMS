@@ -11,17 +11,19 @@ class EventAdvertisementImage extends Model
 {
     use HasFactory;
 
+    // attributes that are mass assignable
     protected $fillable=[
         'image_name',
         'image_description',
     ];
 
+    // attributes that are not mass assignable
     protected $guarded=[
         'event_advertisement_id',
         'image_s3_key'
     ];
 
-
+    // Define relationship with EventAdvertisement model
     public function eventAdvertisement():BelongsTo{
         return $this->belongsTo(EventAdvertisement::class);
     }
