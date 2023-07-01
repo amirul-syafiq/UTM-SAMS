@@ -2,7 +2,7 @@ id: 49219
 name: UTM-SAMS
 environments:
     production:
-        storage: utmsamsbucket
+        storage: utmsamsprod
         memory: 1024
         runtime: 'php-8.2:al2'
         database: utm-sams-db
