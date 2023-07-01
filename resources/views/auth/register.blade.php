@@ -22,6 +22,11 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                     required autocomplete="username" />
             </div>
+            <div class="mt-4">
+                <x-label for="utm_id" value="{{ __('UTM ID') }}" />
+                <x-input id="utm_id" class="block mt-1 w-full" type="text" name="utm_id" :value="old('utm_id')"
+                    required autocomplete="utm_id" />
+            </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
