@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\EventAdvertisement;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,13 +13,13 @@ use NotificationChannels\WebPush\WebPushMessage;
 class NewEventNotification extends Notification
 {
     use Queueable;
-
+    private $eventAdvertisement;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(EventAdvertisement $eventAdvertisement)
     {
-        //
+        $this->eventAdvertisement = $eventAdvertisement;
     }
 
     /**
@@ -35,10 +36,12 @@ class NewEventNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('I\'m Notification Title')
-            ->icon('/notification-icon.png')
-            ->body('Great, Push Notifications work!')
-            ->action('View App', 'notification_action');
+            ->title('Upcoming Event!')
+
+            ->body('Registesr now for ' . $this->eventAdvertisement->event->event_name)
+            // redirect to the app
+            ->action('View App', url('/'))
+            ->options(['targetUrl' => url('/')]);
     }
 
     /**

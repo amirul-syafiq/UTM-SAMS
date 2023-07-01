@@ -171,8 +171,8 @@ class EventAdvertisementController extends Controller
         return  $additionalInformation;
     }
 
-    public function pushNoti(){
-        Notification::send(User::all(),new NewEventNotification);
+    public function pushNoti($event){
+        Notification::send(User::all(),new NewEventNotification($event));
     }
 
 
@@ -199,8 +199,8 @@ class EventAdvertisementController extends Controller
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
             $eventAdvertisement->save();
-   // Notify user on new event added
-   $this->pushNoti();
+            // Notify user on new event added
+            $this->pushNoti($eventAdvertisement);
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
         } else {
             $eventAdvertisement = new EventAdvertisement();
@@ -217,6 +217,7 @@ class EventAdvertisementController extends Controller
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
 
+            $this->pushNoti($eventAdvertisement);
 
 
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Created Successfully');
