@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CometChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ECertificateController;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventAdvertisementController;
@@ -35,6 +34,8 @@ Route::middleware([
     Route::get('/dashboard/search', [DashboardController::class, 'searchEvent'])->name('dashboard.search');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
     // Event
     Route::get('event', function () {
         return view('eventManagement.eventDetails');
@@ -51,6 +52,13 @@ Route::middleware([
     Route::get('/create-event-advertisement-form/{clubEventId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.create');
     Route::get('/edit-event-advertisement-form/{clubEventId}/{eventAdvertisementId}', [EventAdvertisementController::class, 'eventAdvertisementForm'])->name('event-advertisement.edit');
     Route::post('/store-event-advertisement/{clubEventId}/{eventAdvertisementId?}', [EventAdvertisementController::class, 'store'])->name('event-advertisement.store');
+
+    // Notification route
+    Route::post('/pushNoti',[EventAdvertisementController::class, 'subscribeNoti'])->name('pushNoti');
+    Route::get('/getNoti',[EventAdvertisementController::class, 'pushNoti'])->name('getNoti');
+
+
+
 
     // Participants
     Route::get('/register-event/{event_id}', [ParticipantController::class, 'create'])->name('participant.create');
@@ -78,4 +86,5 @@ Route::middleware([
 
     // Generate ecertificate for the participant
     Route::get('generate-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'generateEcert'])->name('ecert.generate');
+
 });

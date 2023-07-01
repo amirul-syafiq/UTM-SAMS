@@ -7,10 +7,14 @@ use App\Models\EventAdvertisement;
 use App\Models\EventAdvertisementImage;
 use App\Models\Participant;
 use App\Models\Tags;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\NewEventAdvertisementNotification;
+use App\Notifications\NewEventNotification;
 
 class EventAdvertisementController extends Controller
 {
@@ -21,16 +25,14 @@ class EventAdvertisementController extends Controller
         $isRegistered = false;
         $isFull = false;
         $isClose = false;
-        if($eventAdvertisement->participants->where('user_id', auth()->user()->id)->count() > 0){
+        if ($eventAdvertisement->participants->where('user_id', auth()->user()->id)->count() > 0) {
             $isRegistered = true;
-        }
-        elseif($eventAdvertisement->participants->count() >= $eventAdvertisement->participant_limit){
+        } elseif ($eventAdvertisement->participants->count() >= $eventAdvertisement->participant_limit) {
             $isFull = true;
-        }
-        elseif($eventAdvertisement->advertisement_start_date< now() || $eventAdvertisement->advertisement_end_date > now()){
+        } elseif ($eventAdvertisement->advertisement_start_date < now() || $eventAdvertisement->advertisement_end_date > now()) {
             $isClose = true;
         }
-        $authToken=Auth::user()->cometchat_auth_token;
+        $authToken = Auth::user()->cometchat_auth_token;
         return view('eventManagement.eventAdvertisementDetailView', compact('eventAdvertisement', 'isRegistered', 'isFull', 'isClose', 'authToken'));
     }
 
@@ -108,12 +110,13 @@ class EventAdvertisementController extends Controller
     }
 
     // To return the list of event advertisement
-    public function uploadImage($image, $eventAdvertisementId){
+    public function uploadImage($image, $eventAdvertisementId)
+    {
 
-        $eaImage=EventAdvertisementImage::where('event_advertisement_id', $eventAdvertisementId)->get();
-        $newEventAdvertisementImage= new EventAdvertisementImage();
+        $eaImage = EventAdvertisementImage::where('event_advertisement_id', $eventAdvertisementId)->get();
+        $newEventAdvertisementImage = new EventAdvertisementImage();
 
-        if($eaImage->count() > 0){
+        if ($eaImage->count() > 0) {
             $imageFileName = $eaImage->first()->image_name;
             $s3 = \Illuminate\Support\Facades\Storage::disk('s3');
             $filePath = '/eventAdvertisement/' . $imageFileName;
@@ -121,14 +124,14 @@ class EventAdvertisementController extends Controller
 
             $newEventAdvertisementImage = $eaImage->first();
         }
-        $imageFileName = 'EAI'.$eventAdvertisementId .'.' . $image->getClientOriginalExtension();
+        $imageFileName = 'EAI' . $eventAdvertisementId . '.' . $image->getClientOriginalExtension();
         $s3 = Storage::disk('s3');
         $filePath = '/eventAdvertisement/' . $imageFileName;
         $s3->put($filePath, file_get_contents($image));
 
-        $newEventAdvertisementImage->event_advertisement_id=$eventAdvertisementId;
-        $newEventAdvertisementImage->image_name=$imageFileName;
-        $newEventAdvertisementImage->image_s3_key=$filePath;
+        $newEventAdvertisementImage->event_advertisement_id = $eventAdvertisementId;
+        $newEventAdvertisementImage->image_name = $imageFileName;
+        $newEventAdvertisementImage->image_s3_key = $filePath;
 
         $newEventAdvertisementImage->save();
     }
@@ -140,12 +143,15 @@ class EventAdvertisementController extends Controller
         // if eventAdvertisement already exist, retrieve the information
         if ($event_advertisement_id) {
             $eventAdvertisement = EventAdvertisement::find($event_advertisement_id);
-            return view('eventManagement.eventAdvertisementDetails',
-                        compact('eventAdvertisement', 'clubEvent'));
-
+            return view(
+                'eventManagement.eventAdvertisementDetails',
+                compact('eventAdvertisement', 'clubEvent')
+            );
         } else {
-            return view('eventManagement.eventAdvertisementDetails',
-                        compact('clubEvent'));
+            return view(
+                'eventManagement.eventAdvertisementDetails',
+                compact('clubEvent')
+            );
         }
     }
 
@@ -154,18 +160,20 @@ class EventAdvertisementController extends Controller
     {
         $additionalInformation = "";
 
-        for($i=0; $i<=($request->inputCounter); $i++){
+        for ($i = 0; $i <= ($request->inputCounter); $i++) {
             // Check if the additional information is not empty (If user input additional information)
 
-            if($request->has('additionalInformation'.$i)){
-                $additionalInformation .=  $request['additionalInformation'.$i] . ", ";
+            if ($request->has('additionalInformation' . $i)) {
+                $additionalInformation .=  $request['additionalInformation' . $i] . ", ";
             }
         }
 
         return  $additionalInformation;
-
     }
 
+    public function pushNoti(){
+        Notification::send(User::all(),new NewEventNotification);
+    }
 
 
     // To store the club event advertisement information (create or update)
@@ -184,14 +192,15 @@ class EventAdvertisementController extends Controller
             $eventAdvertisement->advertisement_title = $request->advertisementTitle;
             $eventAdvertisement->advertisement_description = $request->advertisementDescription;
             $eventAdvertisement->advertisement_start_date = $request->advertisementStartDate;
-            $eventAdvertisement->advertisement_end_date= $request->advertisementEndDate;
+            $eventAdvertisement->advertisement_end_date = $request->advertisementEndDate;
             $eventAdvertisement->participant_limit = $request->participantLimit;
             $eventAdvertisement->tags()->sync($splittedTags);
             if ($request->hasFile('advertisementImage')) {
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
             $eventAdvertisement->save();
-
+   // Notify user on new event added
+   $this->pushNoti();
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Updated Successfully');
         } else {
             $eventAdvertisement = new EventAdvertisement();
@@ -199,7 +208,7 @@ class EventAdvertisementController extends Controller
             $eventAdvertisement->advertisement_title = $request->advertisementTitle;
             $eventAdvertisement->advertisement_description = $request->advertisementDescription;
             $eventAdvertisement->advertisement_start_date = $request->advertisementStartDate;
-            $eventAdvertisement->advertisement_end_date= $request->advertisementEndDate;
+            $eventAdvertisement->advertisement_end_date = $request->advertisementEndDate;
             $eventAdvertisement->participant_limit = $request->participantLimit;
             $eventAdvertisement->additional_information_key = $this->appendAdditionalInformation($request);
             $eventAdvertisement->save();
@@ -208,8 +217,30 @@ class EventAdvertisementController extends Controller
                 $this->uploadImage($request->file('advertisementImage'), $eventAdvertisement->id);
             }
 
+
+
             return redirect()->route('event-advertisement-my-list.view', $event_id)->with('success', 'Event Advertisement Created Successfully');
         }
     }
+
+    // Store  subscribe notification for new event advertisement
+    public function subscribeNoti(Request $request)
+    {
+        $this->validate($request, [
+            'endpoint'    => 'required',
+            'keys.auth'   => 'required',
+            'keys.p256dh' => 'required'
+        ]);
+        $endpoint = $request->endpoint;
+        $token = $request->keys['auth'];
+        $key = $request->keys['p256dh'];
+        $user = Auth::user();
+        $user->updatePushSubscription($endpoint, $key, $token);
+
+        return response()->json(['success' => true], 200);
+    }
+
+
+
 
 }

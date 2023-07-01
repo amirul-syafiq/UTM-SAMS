@@ -71,11 +71,15 @@
                     </a>
                 @endforeach
             </div>
-
             <br>
             {{ $events->links() }}
         </div>
+
     </div>
 
+
+@auth
+<script src="{{ asset('js/enable-push.js') }}" defer></script>
+@endauth
 
 </x-app-layout>

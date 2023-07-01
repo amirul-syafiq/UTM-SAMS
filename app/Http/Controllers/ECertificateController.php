@@ -167,7 +167,7 @@ class ECertificateController extends Controller
         $ecertSVG = $xml->asXML();
         // Convert the svg to base64
         $dataUri = 'data:image/svg+xml;base64,' . base64_encode($ecertSVG);
-
+    //    html to convert to pdf
 
         return view('eCertificate.ecert-view', compact('dataUri', 'ecertSVG'));
     }
