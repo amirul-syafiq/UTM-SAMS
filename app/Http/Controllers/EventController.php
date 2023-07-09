@@ -74,9 +74,7 @@ class EventController extends Controller
 
     public function viewEvent()
     {
-        // $clubEvents = Event::where('event_organizer', Auth::user()->id)
-        //                 ->with('eventStatus')
-        //             ->get();
+
         $clubEvents = Event::select('events.*', 'rf_statuses.status_name')
             ->where('event_organizer', Auth::user()->id)
             ->leftJoin('rf_statuses', 'events.event_status', '=', 'status_code')
@@ -101,8 +99,9 @@ class EventController extends Controller
     {
         $this->validateInput($input);
 
+        // Redirect if user is not the event organizer
         if (Auth::user()->id != Event::where('id', $eventId)->first()->event_organizer) {
-            return redirect()->route('event.viewEvent')->with('error', 'You are not authorized to edit this event!');
+            return view("not-authorized");
         }
         $updateEvent = Event::where('id', $eventId)->first();
         $updateEvent->event_name = $input['eventName'];
@@ -114,6 +113,7 @@ class EventController extends Controller
         $updateEvent->event_end_date = $input['eventEndDateTime'];
         $updateEvent->event_status = $input['eventStatus'];
         $updateEvent->save();
+
 
         return $this->viewEvent();;
     }

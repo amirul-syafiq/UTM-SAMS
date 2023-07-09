@@ -77,11 +77,15 @@
                                 <td class="border px-4 py-2">{{ $user->utm_id }}</td>
                                 <td class="border px-4 py-2">{{ $user->email }}</td>
                                 <td class="border px-4 py-2">{{ $user->role_code }}</td>
-                                <td class="border px-4 py-2">
-                                    <a href="{{ route('admin.editUser', $user->id) }}"
-                                        class="bg-secondary hover:bg-accent-2 hover:text-black
-                                         text-white font-bold py-2 px-4 rounded">Edit</a>
+                                <td class="border px-1 py-2 text-center">
+                                    <div class="flex flex-col sm:flex-row justify-center items-center">
+                                        <a href="{{ route('admin.editUser', $user->id) }}"
+                                            class="bg-secondary hover:bg-accent-2 hover:text-black
+                                            text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0 sm:mr-2">Edit</a>
+                                            <a href="#" onclick="deleteUser(event, '{{ route('admin.deleteUser', $user->id) }}')"
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
 
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -94,11 +98,29 @@
 
 
 </x-app-layout>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script>
     // to store selected value in hidden field
     function storeUserRole($role_code) {
         document.getElementById('role_code').value = $role_code;
         document.getElementById('dropdownAction').classList.toggle('hidden');
+    }
+
+    function deleteUser(event, url) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this user?')) {
+            axios.delete(url)
+                .then(response => {
+                    // Handle the success message
+                    alert(response.data.message);
+                    // Refresh page
+                    location.reload();
+                })
+                .catch(error => {
+                    // Handle the deletion error
+                });
+        }
     }
 </script>

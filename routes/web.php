@@ -69,6 +69,7 @@ Route::middleware([
 
     // Admin
     Route::get('/admin-user-list', [AdminController::class, 'userList'])->name('admin.userList');
+    Route::delete('/admin-user-delete/{user_id}', [AdminController::class, 'destroy'])->name('admin.deleteUser');
     Route::match(['get', 'post'], '/admin-user-list-filter', [AdminController::class, 'filterUserList'])->name('admin.userListFilter');
     Route::get('/admin-user-edit/{user_id}', [AdminController::class, 'edit'])->name('admin.editUser');
     Route::put('/admin-user-update/{user_id}', [AdminController::class, 'update'])->name('admin.updateUser');

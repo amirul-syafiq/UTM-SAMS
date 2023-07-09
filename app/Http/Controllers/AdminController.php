@@ -26,7 +26,7 @@ class AdminController extends Controller
         }
 
         // Get all users from database and paginate it by 9
-        $users = User::select('id', 'name', 'utm_id', 'email', 'address', 'phone', 'role_code')
+        $users = User::select('id', 'name', 'utm_id', 'email', 'address', 'phone', 'role_code')->where('deleted_at', null)
             ->orderBy('name')
             ->paginate(9);
 
@@ -113,5 +113,13 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->route('admin.userList')->with('success', 'User updated successfully');
+    }
+
+    public function destroy($user_id)
+    {
+        $user = User::find($user_id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

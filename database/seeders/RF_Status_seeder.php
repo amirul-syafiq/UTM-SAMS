@@ -47,6 +47,27 @@ class RF_Status_seeder extends Seeder
                 'status_name' => 'Ended',
                 'status_description' => 'Event has ended. End date is in the past',
             ],
+            [
+                'status_code' => 'EV04',
+                'status_name' => 'Cancelled',
+                'status_description' => 'Event has been cancelled',
+            ],
+            [
+                'status_code' => 'EV05',
+                'status_name' => 'Postponed',
+                'status_description' => 'Event has been postponed',
+            ],
+            // [
+            //     'status_code' => 'EV06',
+            //     'status_name' => 'Suspended',
+            //     'status_description' => 'Event has been suspended',
+            // ],
+            // [
+            //     'status_code' => 'EV07',
+            //     'status_name' => 'Deleted',
+            //     'status_description' => 'Event has been deleted',
+
+            // ],
 
             // Participant Registration Status
             [

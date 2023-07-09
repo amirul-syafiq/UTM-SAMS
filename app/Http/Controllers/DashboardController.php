@@ -15,9 +15,14 @@ class DashboardController extends Controller
     {
         // Fetch all advertisement which is active by checking the start and end date
         $events = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')
-        ->where('advertisement_start_date', '<=', now())
-        ->where('advertisement_end_date', '>=', now())
-        ->paginate(9);
+            ->where('advertisement_start_date', '<=', now())
+            ->where('advertisement_end_date', '>=', now())
+            ->where(function ($query) {
+                $query->where('advertisement_status', '=', 'EV01')
+                    ->orWhere('advertisement_status', '=', 'EV02');
+            })
+
+            ->paginate(9);
 
         return view('dashboard', compact('events'));
     }
@@ -33,12 +38,18 @@ class DashboardController extends Controller
 
         // Fetch all advertisement which is active by checking the start and end date
         $filteredResult = EventAdvertisement::with('eventAdvertisementImage', 'event', 'tags')
+            ->where('advertisement_start_date', '<=', now())
+            ->where('advertisement_end_date', '>=', now())
+            ->where(function ($query) {
+                $query->where('advertisement_status', '=', 'EV01')
+                    ->orWhere('advertisement_status', '=', 'EV02');
+            })
             ->where(function ($query) use ($request) {
                 $query->whereHas('event', function ($query) use ($request) {
                     $query->where('event_name', 'like', '%' . $request->event_search_keyword . '%');
                 })
-                ->orWhereHas('tags', function ($query) use ($request) {
-                    $query->where('tags.tag_name', '=', $request->event_search_keyword);
+                    ->orWhereHas('tags', function ($query) use ($request) {
+                        $query->where('tags.tag_name', '=', $request->event_search_keyword);
                     })
                     ->orWhere('advertisement_title', 'like', '%' . $request->event_search_keyword . '%');
             })
