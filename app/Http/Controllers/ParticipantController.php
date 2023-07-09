@@ -93,7 +93,7 @@ class ParticipantController extends Controller
 
     public function updateParticipantStatus(Request $request, $eventAdvertisement_id, $participant_id)
     {
-        $participant = Participant::find($participant_id)->where('event_advertisement_id', $eventAdvertisement_id)->first();
+        $participant = Participant::where('id', $participant_id)->first();
         if (!$participant) {
             return redirect()->route('participant.viewParticipantList', $eventAdvertisement_id)->with('error', 'Participant not found');
         }

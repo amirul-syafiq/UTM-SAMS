@@ -51,15 +51,15 @@ class ECertificateController extends Controller
     }
 
     // Function use to store file from template
-    public function useEcertTemplate($event_advertisement_id)
+    public function useEcertTemplate($eventAdvertisement_id)
     {
         // Get the ecert template
         $ecertTemplate = ECertificate::where('ecertificate_status', 'like', 'EC00')->first();
-        $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
+        $ecertSVG = ECertificate::where('event_advertisement_id', $eventAdvertisement_id)->first();
 
 
         // Store ecert file name based on the event advertisement id
-        $ecertFileName = 'ECertEV' . $event_advertisement_id . '.svg';
+        $ecertFileName = 'ECertEV' . $eventAdvertisement_id . '.svg';
 
         // Use the template path as the file path
         $filePath = $ecertTemplate->ecertificate_s3_key;
@@ -68,18 +68,19 @@ class ECertificateController extends Controller
          $ecertSVG->ecertificate_name = $ecertFileName;
          $ecertSVG->ecertificate_status = "EC02";
          $ecertSVG->ecertificate_s3_key = $filePath;
-         $ecertSVG->event_advertisement_id = $event_advertisement_id;
+         $ecertSVG->event_advertisement_id = $eventAdvertisement_id;
          $ecertSVG->save();
+         return redirect()->route('participant.viewParticipantList', $eventAdvertisement_id)->with('success', 'Ecertificate updated');
 
     }
 
-    public function store(Request $request, $event_advertisement_id)
+    public function store(Request $request, $eventAdvertisement_id)
     {
         // Validate the file
         $this->validateFile($request);
 
         // Get the ecert data from the database
-        $ecertSVG = ECertificate::where('event_advertisement_id', $event_advertisement_id)->first();
+        $ecertSVG = ECertificate::where('event_advertisement_id', $eventAdvertisement_id)->first();
         $s3 = Storage::disk('s3');
         // If is null, create a new ecert
         if (!$ecertSVG) {
@@ -87,12 +88,13 @@ class ECertificateController extends Controller
         }
         // If is not null, delete the old ecert
         else if ($ecertSVG->count() > 0) {
-            $ecertFileName = $ecertSVG->first()->ecertificate_name;
+            $ecertFileName = $ecertSVG->ecertificate_name;
             $filepath = '/ecertificates/' . $ecertFileName;
+
             $s3->delete($filepath);
         }
         // Store ecert file name based on the event advertisement id
-        $ecertFileName = 'ECertEV' . $event_advertisement_id . '.svg';
+        $ecertFileName = 'ECertEV' . $eventAdvertisement_id . '.svg';
 
         // Store the file in the s3 bucket
         $filePath = '/ecertificates/' . $ecertFileName;
@@ -102,8 +104,10 @@ class ECertificateController extends Controller
         $ecertSVG->ecertificate_name = $ecertFileName;
         $ecertSVG->ecertificate_status = $request->ecertStatus;
         $ecertSVG->ecertificate_s3_key = $filePath;
-        $ecertSVG->event_advertisement_id = $event_advertisement_id;
+        $ecertSVG->event_advertisement_id = $eventAdvertisement_id;
         $ecertSVG->save();
+
+        return redirect()->route('participant.viewParticipantList', $eventAdvertisement_id)->with('success', 'Ecertificate updated');
     }
 
     public function generateEcert($event_advertisement_id)

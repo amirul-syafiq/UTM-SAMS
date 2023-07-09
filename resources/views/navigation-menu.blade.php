@@ -18,30 +18,24 @@
 
                     {{-- Use switch  to check user role --}}
                     @switch(Auth::user()->role_code)
-                    @case('UR03')
-                        {{-- Role is staff --}}
-                        <x-nav-link href="{{ route('admin.viewEvent') }}" :active="request()->routeIs('admin.viewEvent')">
-                            {{ _('Event List') }}
-                        </x-nav-link>
-
+                        @case('UR01')
+                            {{-- Role is staff --}}
                         @case('UR02')
                             {{-- Role is student --}}
                             <x-nav-link href="{{ route('participant.viewEventRegistrationHistory') }}" :active="request()->routeIs('participant.viewEventRegistrationHistory')">
                                 {{ _('Registered Event') }}
                             </x-nav-link>
-
                         @break
 
                         @case('UR04')
                             {{-- Role is admin --}}
-                            <x-nav-link href="{{ route('admin.viewEvent') }}" :active="request()->routeIs('admin.viewEvent')">
-                                {{ _('Event List') }}
-                            </x-nav-link>
+
                             <x-nav-link href="{{ route('admin.userList') }}" :active="request()->routeIs('admin.userList')">
                                 {{ _('User List') }}
                             </x-nav-link>
-                        @case('UR01')
+                        @case('UR03')
                             {{-- Role is club --}}
+
                             <x-nav-link href="{{ route('createEventForm') }}" :active="request()->routeIs('createEventForm')">
                                 {{ _('Create Event') }}
                             </x-nav-link>

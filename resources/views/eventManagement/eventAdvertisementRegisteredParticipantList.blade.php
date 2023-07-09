@@ -10,9 +10,11 @@
 
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg mt-5">
 
-            <a href="{{ route('ecert.create', ['eventAdvertisementId' => $eventAdvertisement->id]) }}"
-                class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">{{ __('E-Certificate') }}
-            </a>
+
+            <div class="m-2 p-2 text-right"><a href="{{ route('ecert.create', ['eventAdvertisementId' => $eventAdvertisement->id]) }}"
+                    class="bg-secondary hover:bg-accent-2 hover:text-black text-white font-bold py-2  px-4 rounded">{{ __('E-Certificate') }}
+                </a>
+            </div>
 
             <table class="table-auto w-full">
                 <thead>

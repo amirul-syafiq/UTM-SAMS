@@ -61,7 +61,7 @@
 
                 </div>
                 {{-- Check if user is participant or staff --}}
-                    @if (Auth::user()->role_code=='UR03'||Auth::user()->role_code=='UR02')
+                    @if (Auth::user()->role_code=='UR01'||Auth::user()->role_code=='UR02')
                 {{-- Display buttons --}}
                     <div class="mt-8 text-center">
                         <a href="" onclick="onClick()"

@@ -1,4 +1,4 @@
-id: 49219
+id: 49255
 name: UTM-SAMS
 environments:
     production:
@@ -6,6 +6,7 @@ environments:
         memory: 1024
         runtime: 'php-8.2:al2'
         database: utm-sams-db
+        timeout: 100
         build:
             - 'php artisan build:composer-mirror'
             - 'composer install --no-dev'
