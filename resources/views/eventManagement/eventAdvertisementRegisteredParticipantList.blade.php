@@ -21,11 +21,12 @@
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 w-20">No.</th>
                         <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">UTM ID</th>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Phone Number</th>
                         @foreach ($eventAdvertisement->additional_informations as $additional_information)
                         <th class="px-4 py-2">{{ Str::title(Str::of($additional_information)->snake()->replace('_', ' ') )}}</th>
-                    @endforeach
+                         @endforeach
 
                         <th class="px-4 py-2">Status</th>
 
@@ -37,9 +38,13 @@
                     @endphp
                     @foreach ($participants as $participant)
                         <tr>
+                            <input type="hidden" id="{{ 'participant_id' . $loop->iteration }}"
+                             value="{{ $participant->user->id }}">
                             <td class="border px-4 py-2">{{ $index + $loop->iteration }}</td>
-                            <td class="border px-4 py-2" name="{{ 'participant_name' . $loop->iteration }}">
-                                {{ $participant->user->name }}</td>
+                            <td class=" text-sky-600 border px-4 py-2" name="{{ 'participant_name' . $loop->iteration }}">
+                                <a title="Chat with user" class=" cursor-pointer" onclick="openChat({{ $participant->user->id }})">{{ $participant->user->name }}</a></td>
+                            <td class="border px-4 py-2" name="{{ 'participant_utmId' . $loop->iteration }}">
+                                    {{ $participant->user->utm_id }}</td>
                             <td class="border px-4 py-2" name="{{ 'participant_email' . $loop->iteration }}">
                                 {{ $participant->user->email }}</td>
                             <td class="border px-4 py-2" name="{{ 'participant_phone' . $loop->iteration }}">
@@ -55,7 +60,7 @@
                                         id="participantForm{{ $loop->iteration }}">
                                         @method('PUT')
                                         @csrf
-                                        <x-custom-dropdown class="rounded-md shadow-sm block mt-1 w-full	"
+                                        <x-custom-dropdown class="rounded-md shadow-sm block mt-1 w-full"
                                             name="{{ 'participant_registration_status' . $loop->iteration }}"
                                             :options="$registrationStatuses" :selected="$participant->registration_status" label="" />
                                         <input hidden name="iteration" type="text" value="{{ $loop->iteration }}">
@@ -81,8 +86,6 @@
                                         </path>
                                     </svg>
                                 </div>
-
-
                             </td>
                         </tr>
                     @endforeach
@@ -180,5 +183,12 @@
                 .textContent;
             document.querySelector('#view_status' + loop_iteration).textContent = previousLabel;
         }
+    }
+
+    function openChat(UID) {
+        event.preventDefault();
+        CometChatWidget.chatWithUser(UID);
+        CometChatWidget.openOrCloseChat(true);
+        console.log("clicked");
     }
 </script>

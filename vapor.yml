@@ -1,11 +1,11 @@
-id: 49255
-name: UTM-SAMS
+id: 49623
+name: fyputmsams
 environments:
     production:
         storage: utmsamsprod
         memory: 1024
         runtime: 'php-8.2:al2'
-        database: utm-sams-db
+        database: utmsams
         timeout: 100
         build:
             - 'php artisan build:composer-mirror'

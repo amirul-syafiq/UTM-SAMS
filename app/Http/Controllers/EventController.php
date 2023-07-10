@@ -68,7 +68,7 @@ class EventController extends Controller
         $newEvent->event_organizer = Auth::user()->id;
         $newEvent->save();
 
-        return redirect()->route('createEventForm')->with('success', 'Event created successfully!');
+        return $this->viewEvent();
     }
 
 

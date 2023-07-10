@@ -38,7 +38,7 @@ class NewEventNotification extends Notification
         return (new WebPushMessage)
             ->title('Upcoming Event!')
 
-            ->body('Registesr now for ' . $this->eventAdvertisement->event->event_name)
+            ->body('Register now for ' . $this->eventAdvertisement->event->event_name)
             // redirect to the app
             ->action('View App', url('/'))
             ->options(['targetUrl' => url('/')]);

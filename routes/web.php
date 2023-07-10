@@ -88,8 +88,8 @@ Route::middleware([
     // Generate ecertificate for the participant
     Route::get('generate-ecertificate/{eventAdvertisementId}', [ECertificateController::class, 'generateEcert'])->name('ecert.generate');
 
-    Route::fallback(function () {
-        return view('404');
-    });
+    // Route::fallback(function () {
+    //     return view('404');
+    // });
 
 });

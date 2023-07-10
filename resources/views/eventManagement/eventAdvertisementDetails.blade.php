@@ -109,7 +109,7 @@
                 @if (isset($eventAdvertisement) && !empty($eventAdvertisement->additional_informations))
 
                     @foreach ($eventAdvertisement->additional_informations as $additional_information)
-                    <li>{{ $additional_information }}</li>
+                    <li>{{ Str::title(Str::of($additional_information)->snake()->replace('_', ' ') ) }}</li>
                     @endforeach
                 @endif
             </ul>
