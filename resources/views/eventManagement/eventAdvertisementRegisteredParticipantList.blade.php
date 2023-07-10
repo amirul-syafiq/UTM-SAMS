@@ -24,8 +24,9 @@
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Phone Number</th>
                         @foreach ($eventAdvertisement->additional_informations as $additional_information)
-                            <th class="px-4 py-2">{{ $additional_information }}</th>
-                        @endforeach
+                        <th class="px-4 py-2">{{ Str::title(Str::of($additional_information)->snake()->replace('_', ' ') )}}</th>
+                    @endforeach
+
                         <th class="px-4 py-2">Status</th>
 
                     </tr>

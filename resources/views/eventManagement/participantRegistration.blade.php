@@ -33,7 +33,7 @@
             @endphp
 
            {{-- Dynamically display the input field --}}
-            <x-label>{{ $additionalInformation }}</x-label>
+            <x-label>{{ Str::title(Str::of($additionalInformation)->snake()->replace('_', ' ') ) }}</x-label>
             <x-input type="text" name="{{ $camelCaseName }}" placeholder="{{ $additionalInformation }}" />
         @endforeach
 

@@ -22,6 +22,9 @@ class EventAdvertisementController extends Controller
     {
 
         $eventAdvertisement = EventAdvertisement::with('eventAdvertisementImage', 'event')->find($event_advertisement_id);
+        if ($eventAdvertisement == null) {
+            return view('404');
+        }
         $isRegistered = false;
         $isFull = false;
         $isClose = false;
@@ -88,6 +91,7 @@ class EventAdvertisementController extends Controller
             'advertisementImage.max' => 'Advertisement Image must be less than 500MB',
             'advertisementStartDate.required' => 'Advertisement Start Date  required',
             'advertisementEndDate.required' => 'Advertisement End Date required',
+            'advertisementEndDate.after' => 'Advertisement End Date must be after the Start Date',
             'participantLimit.required' => 'Participant Limit is required',
             'participantLimit.integer' => 'Participant Limit must be an integer',
             'participantLimit.min' => 'Participant Limit must be at least 1',
@@ -103,7 +107,7 @@ class EventAdvertisementController extends Controller
             'advertisementDescription' => ['required', 'string', 'max:5000'],
             'advertisementImage' => ['mimes:jpeg,png,jpg,gif', 'max:512000'],
             'advertisementStartDate' => ['required', 'date'],
-            'advertisementEndDate' => ['required', 'date'],
+            'advertisementEndDate' => ['required', 'date','after:advertisementStartDate'],
             'participantLimit' => ['required', 'integer', 'min:1'],
             'advertisementTags' => ['required', 'string', 'max:255'],
         ], $messages)->validate();
