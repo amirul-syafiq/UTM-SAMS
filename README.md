@@ -4,7 +4,7 @@ This project is a part of my final year project, UTM Activity Management System 
 In the meantime, the students will be able to search for desired events and registered for it. Some additional features provided including ability to chat with the program organizer and generate ecertificate.
 The system is developed usig Laravel, a PHP framework. 
 
-##Software Requirements:
+## Software Requirements:
 <ul>
     <li>PHP ^8.1</li>
     <li>Composer version 2.5.5</li>
