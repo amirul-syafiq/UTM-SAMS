@@ -13,5 +13,4 @@ This project is a part of my final year project, UTM Activity Management System 
 In the meantime, the students will be able to search for desired events and registered for it. Some additional features provided including ability to chat with the program organizer and generate ecertificate.
 
 Below is the system architecture:
-
-<p align="center"><img src="https://drive.google.com/file/d/1wqFO5so7rUCgs_o3GaPzXycsyqx_9lZ4/view?usp=sharing" width="400" alt="System Architecture"></p>
+![Arcitecture ](https://github.com/amirul-syafiq/UTM-SAMS/assets/99257871/5513139a-a08a-41e9-9d3b-4a40707d6e57)
